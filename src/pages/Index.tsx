@@ -479,6 +479,15 @@ const Index = () => {
                     <WishCard name={name} countdown={countdown} compact />
                   </div>
                 </div>
+
+                <button
+                  type="button"
+                  onClick={resetDefaults}
+                  className="w-full action-btn action-btn-secondary"
+                  aria-label="Reset title, countdown, and music settings to defaults"
+                >
+                  ↺ Reset to defaults
+                </button>
               </div>
             )}
           </aside>

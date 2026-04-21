@@ -195,6 +195,51 @@ const Index = () => {
 
   return (
     <div className="snow-body min-h-screen relative overflow-hidden">
+      {/* Tricolor radial glow */}
+      <div className="tricolor-glow" aria-hidden="true" />
+
+      {/* Bokeh orbs */}
+      <div className="bokeh-layer" aria-hidden="true">
+        {[
+          { c: "bokeh-saffron", size: 280, top: "8%",  left: "10%", dur: 9,  alt: false },
+          { c: "bokeh-white",   size: 220, top: "20%", left: "75%", dur: 11, alt: true  },
+          { c: "bokeh-green",   size: 320, top: "65%", left: "15%", dur: 13, alt: false },
+          { c: "bokeh-blue",    size: 200, top: "75%", left: "70%", dur: 10, alt: true  },
+          { c: "bokeh-saffron", size: 160, top: "45%", left: "50%", dur: 12, alt: true  },
+          { c: "bokeh-green",   size: 180, top: "5%",  left: "55%", dur: 14, alt: false },
+          { c: "bokeh-white",   size: 140, top: "55%", left: "85%", dur: 9,  alt: true  },
+        ].map((b, i) => (
+          <span
+            key={i}
+            className={`bokeh ${b.c}`}
+            style={{
+              width: b.size, height: b.size,
+              top: b.top, left: b.left,
+              animation: `${b.alt ? "float-bokeh-alt" : "float-bokeh"} ${b.dur}s ease-in-out infinite`,
+              animationDelay: `${i * 0.7}s`,
+            }}
+          />
+        ))}
+        {/* Sparkles */}
+        {Array.from({ length: 18 }).map((_, i) => (
+          <span
+            key={`sp-${i}`}
+            className="sparkle"
+            style={{
+              left: `${(i * 5.5) % 100}%`,
+              bottom: `-${Math.random() * 20}px`,
+              animationDuration: `${8 + (i % 6) * 1.5}s`,
+              animationDelay: `${(i * 0.6) % 8}s`,
+              boxShadow: i % 3 === 0
+                ? "0 0 10px 2px hsl(var(--saffron) / 0.9)"
+                : i % 3 === 1
+                ? "0 0 10px 2px hsl(var(--india-green) / 0.9)"
+                : "0 0 10px 2px rgba(255,255,255,0.95)",
+            }}
+          />
+        ))}
+      </div>
+
       <audio ref={audioRef} src={vandemataram} loop preload="auto" aria-label="Vande Mataram instrumental" />
 
       {/* Music control panel */}

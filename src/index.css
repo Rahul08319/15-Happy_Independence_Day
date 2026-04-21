@@ -45,6 +45,51 @@
   background-color: #cfeaff;
 }
 
+/* === Independence Day bokeh + visual effects === */
+.bokeh-layer { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+.bokeh {
+  position: absolute; border-radius: 9999px; filter: blur(28px);
+  opacity: 0.55; mix-blend-mode: screen; will-change: transform, opacity;
+}
+.bokeh-saffron { background: radial-gradient(circle, hsl(var(--saffron) / 0.95), transparent 70%); }
+.bokeh-white   { background: radial-gradient(circle, rgba(255,255,255,0.95), transparent 70%); }
+.bokeh-green   { background: radial-gradient(circle, hsl(var(--india-green) / 0.95), transparent 70%); }
+.bokeh-blue    { background: radial-gradient(circle, hsl(var(--india-blue) / 0.9), transparent 70%); }
+
+@keyframes float-bokeh {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.45; }
+  50%  { transform: translate(30px, -40px) scale(1.15); opacity: 0.75; }
+  100% { transform: translate(-20px, 20px) scale(0.95); opacity: 0.45; }
+}
+@keyframes float-bokeh-alt {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.5; }
+  50%  { transform: translate(-40px, 30px) scale(1.2); opacity: 0.8; }
+  100% { transform: translate(25px, -15px) scale(1); opacity: 0.5; }
+}
+
+.tricolor-glow {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(circle at 15% 20%, hsl(var(--saffron) / 0.25), transparent 45%),
+    radial-gradient(circle at 85% 75%, hsl(var(--india-green) / 0.25), transparent 45%),
+    radial-gradient(circle at 50% 50%, hsl(var(--india-blue) / 0.18), transparent 60%);
+  animation: pulse-glow 8s ease-in-out infinite;
+}
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.85; }
+  50%      { opacity: 1; }
+}
+
+.sparkle {
+  position: absolute; width: 6px; height: 6px; border-radius: 50%;
+  background: #fff; animation: sparkle-rise linear infinite; opacity: 0;
+}
+@keyframes sparkle-rise {
+  0%   { transform: translateY(0) scale(0.6); opacity: 0; }
+  20%  { opacity: 1; }
+  100% { transform: translateY(-110vh) scale(1.2); opacity: 0; }
+}
+
 /* Vertical scrolling flower borders */
 .marquee-col {
   position: fixed;

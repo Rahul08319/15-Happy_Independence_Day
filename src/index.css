@@ -90,6 +90,28 @@
   100% { transform: translateY(-110vh) scale(1.2); opacity: 0; }
 }
 
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .bokeh,
+  .sparkle,
+  .tricolor-glow,
+  .swing1,
+  .marquee-up,
+  .marquee-down,
+  figure.wobble,
+  .glow-h1,
+  .rock-h2 {
+    animation: none !important;
+  }
+  .sparkle { display: none !important; }
+  .bokeh { opacity: 0.25 !important; filter: blur(40px); }
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
 /* Vertical scrolling flower borders */
 .marquee-col {
   position: fixed;

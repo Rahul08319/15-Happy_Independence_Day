@@ -125,6 +125,11 @@ const Index = () => {
   const cardRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [volume, setVolume] = useState(0.6);
+
+  useEffect(() => {
+    if (audioRef.current) audioRef.current.volume = volume;
+  }, [volume]);
 
   const toggleAudio = async () => {
     if (!audioRef.current) return;
@@ -191,15 +196,33 @@ const Index = () => {
   return (
     <div className="snow-body min-h-screen relative overflow-hidden">
       <audio ref={audioRef} src={vandemataram} loop preload="auto" aria-label="Vande Mataram instrumental" />
-      <button
-        type="button"
-        onClick={toggleAudio}
-        className="fixed top-4 right-4 z-30 rounded-full bg-primary text-primary-foreground shadow-lg px-4 py-2 font-semibold hover:opacity-90 focus-visible:ring-2 focus-visible:ring-ring"
-        aria-label={isPlaying ? "Pause Vande Mataram background music" : "Play Vande Mataram background music"}
-        aria-pressed={isPlaying}
-      >
-        {isPlaying ? "🔊 Pause Music" : "🎵 Play Vande Mataram"}
-      </button>
+
+      {/* Music control panel */}
+      <div className="music-panel fixed top-4 right-4 z-30 flex items-center gap-3 rounded-full px-4 py-2 shadow-lg">
+        <button
+          type="button"
+          onClick={toggleAudio}
+          className="flex items-center gap-2 font-semibold text-sm text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-full"
+          aria-label={isPlaying ? "Pause Vande Mataram background music" : "Play Vande Mataram background music"}
+          aria-pressed={isPlaying}
+        >
+          <span aria-hidden="true" className="text-base">{isPlaying ? "⏸" : "▶"}</span>
+          <span className="hidden sm:inline">{isPlaying ? "Pause" : "Vande Mataram"}</span>
+        </button>
+        <div className="flex items-center gap-2">
+          <span aria-hidden="true" className="text-white text-sm">🔉</span>
+          <input
+            type="range"
+            min={0}
+            max={1}
+            step={0.05}
+            value={volume}
+            onChange={(e) => setVolume(parseFloat(e.target.value))}
+            className="volume-slider w-20"
+            aria-label="Background music volume"
+          />
+        </div>
+      </div>
 
       {/* Decorative side marquees */}
       <div className="marquee-col marquee-col-left" aria-hidden="true">

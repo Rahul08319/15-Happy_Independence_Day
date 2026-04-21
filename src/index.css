@@ -164,9 +164,49 @@ figure.wobble {
   @apply hover:opacity-95 hover:scale-[1.01] shadow-md;
 }
 
-/* Editor panel — high-contrast surface */
+/* Editor panel — themed high-contrast surface */
 .editor-panel {
-  background: hsl(0 0% 100% / 0.92);
-  border: 1px solid hsl(var(--border));
-  box-shadow: 0 10px 30px -10px hsl(var(--india-blue) / 0.3);
+  background: linear-gradient(160deg, hsl(0 0% 100% / 0.96), hsl(45 100% 96% / 0.92));
+  border: 1px solid hsl(var(--saffron) / 0.35);
+  box-shadow: 0 20px 50px -20px hsl(var(--india-blue) / 0.45);
+  border-radius: 1rem;
+  position: relative;
+  overflow: hidden;
 }
+.editor-panel::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg,
+    hsl(var(--saffron)) 0%, hsl(var(--saffron)) 33%,
+    #fff 33%, #fff 66%,
+    hsl(var(--india-green)) 66%, hsl(var(--india-green)) 100%);
+}
+
+/* Music control panel — themed */
+.music-panel {
+  background: linear-gradient(135deg, hsl(var(--india-blue)), hsl(var(--india-green)));
+  border: 2px solid hsl(0 0% 100% / 0.6);
+  backdrop-filter: blur(8px);
+}
+.volume-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 999px;
+  background: hsl(0 0% 100% / 0.4);
+  outline: none;
+}
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: hsl(var(--saffron)); border: 2px solid #fff; cursor: pointer;
+}
+.volume-slider::-moz-range-thumb {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: hsl(var(--saffron)); border: 2px solid #fff; cursor: pointer;
+}
+
+.share-btn { transition: transform 0.15s ease, filter 0.15s ease; }
+.share-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }

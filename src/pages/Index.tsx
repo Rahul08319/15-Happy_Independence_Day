@@ -203,9 +203,11 @@ const Index = () => {
       if (isPlaying) {
         audioRef.current.pause();
         setIsPlaying(false);
+        setAudioStatus("Music paused");
       } else {
         await audioRef.current.play();
         setIsPlaying(true);
+        setAudioStatus("Music playing: Vande Mataram");
       }
     } catch (e) {
       toast({ title: "Playback failed", description: String(e), variant: "destructive" });

@@ -7,6 +7,7 @@ import flower2 from "@/assets/124.png";
 import bb from "@/assets/bb.gif";
 import snow from "@/assets/snow.gif";
 import wp from "@/assets/wp.png";
+import vandemataram from "@/assets/vandemataram.mp3";
 
 const DEFAULT_TARGET = "2026-08-15T00:00:00";
 
@@ -122,6 +123,23 @@ const Index = () => {
   const [showEditor, setShowEditor] = useState<boolean>(!initialName);
   const countdown = useCountdown(targetDate);
   const cardRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const toggleAudio = async () => {
+    if (!audioRef.current) return;
+    try {
+      if (isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      } else {
+        await audioRef.current.play();
+        setIsPlaying(true);
+      }
+    } catch (e) {
+      toast({ title: "Playback failed", description: String(e), variant: "destructive" });
+    }
+  };
 
   // Prompt only if no name in URL and editor is dismissed without entering one
   useEffect(() => {
@@ -172,6 +190,17 @@ const Index = () => {
 
   return (
     <div className="snow-body min-h-screen relative overflow-hidden">
+      <audio ref={audioRef} src={vandemataram} loop preload="auto" aria-label="Vande Mataram instrumental" />
+      <button
+        type="button"
+        onClick={toggleAudio}
+        className="fixed top-4 right-4 z-30 rounded-full bg-primary text-primary-foreground shadow-lg px-4 py-2 font-semibold hover:opacity-90 focus-visible:ring-2 focus-visible:ring-ring"
+        aria-label={isPlaying ? "Pause Vande Mataram background music" : "Play Vande Mataram background music"}
+        aria-pressed={isPlaying}
+      >
+        {isPlaying ? "🔊 Pause Music" : "🎵 Play Vande Mataram"}
+      </button>
+
       {/* Decorative side marquees */}
       <div className="marquee-col marquee-col-left" aria-hidden="true">
         <div className="marquee-track marquee-up">

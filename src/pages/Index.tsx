@@ -293,12 +293,17 @@ const Index = () => {
             className="editor-panel rounded-xl p-5 backdrop-blur"
             aria-label="Wish editor and live preview"
           >
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="text-lg font-bold text-foreground">Customize</h2>
+            <div className="flex items-center justify-between mb-4 pt-1">
+              <div className="flex items-center gap-2">
+                <span aria-hidden="true" className="text-xl">🇮🇳</span>
+                <h2 className="text-lg font-extrabold tracking-tight bg-gradient-to-r from-[hsl(var(--saffron))] via-[hsl(var(--india-blue))] to-[hsl(var(--india-green))] bg-clip-text text-transparent">
+                  Customize Your Wish
+                </h2>
+              </div>
               <button
                 type="button"
                 onClick={() => setShowEditor((v) => !v)}
-                className="text-sm underline text-primary"
+                className="text-xs font-semibold px-2 py-1 rounded-md border border-border hover:bg-accent text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 aria-expanded={showEditor}
                 aria-controls="editor-fields"
               >

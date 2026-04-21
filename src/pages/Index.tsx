@@ -115,12 +115,37 @@ const Index = () => {
     () => (typeof window !== "undefined" ? new URLSearchParams(window.location.search) : new URLSearchParams()),
     []
   );
-  const initialName = params.get("name") || "";
-  const initialDate = params.get("date") || DEFAULT_TARGET;
+  const initialName = params.get("name") || (typeof window !== "undefined" ? localStorage.getItem("idw:name") || "" : "");
+  const initialDate = params.get("date") || (typeof window !== "undefined" ? localStorage.getItem("idw:date") || DEFAULT_TARGET : DEFAULT_TARGET);
 
   const [name, setName] = useState<string>(initialName);
   const [targetDate, setTargetDate] = useState<string>(initialDate);
   const [showEditor, setShowEditor] = useState<boolean>(!initialName);
+  const [audioStatus, setAudioStatus] = useState<string>("");
+
+  // Persist edits to localStorage
+  useEffect(() => {
+    try { localStorage.setItem("idw:name", name); } catch {}
+  }, [name]);
+  useEffect(() => {
+    try { localStorage.setItem("idw:date", targetDate); } catch {}
+  }, [targetDate]);
+
+  const resetDefaults = () => {
+    setName("");
+    setTargetDate(DEFAULT_TARGET);
+    setVolume(0.6);
+    setIsMuted(false);
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
+    setIsPlaying(false);
+    try {
+      localStorage.removeItem("idw:name");
+      localStorage.removeItem("idw:date");
+    } catch {}
+    toast({ title: "Reset", description: "Title, countdown, and music restored to defaults." });
+  };
   const countdown = useCountdown(targetDate);
   const cardRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -144,6 +169,7 @@ const Index = () => {
       } else if (volume === 0) {
         setVolume(prevVolumeRef.current || 0.6);
       }
+      setAudioStatus(next ? "Music muted" : "Music unmuted");
       return next;
     });
   };
@@ -177,9 +203,11 @@ const Index = () => {
       if (isPlaying) {
         audioRef.current.pause();
         setIsPlaying(false);
+        setAudioStatus("Music paused");
       } else {
         await audioRef.current.play();
         setIsPlaying(true);
+        setAudioStatus("Music playing: Vande Mataram");
       }
     } catch (e) {
       toast({ title: "Playback failed", description: String(e), variant: "destructive" });
@@ -281,6 +309,11 @@ const Index = () => {
       </div>
 
       <audio ref={audioRef} src={vandemataram} loop preload="auto" aria-label="Vande Mataram instrumental" />
+
+      {/* Screen-reader announcements for music state */}
+      <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">
+        {audioStatus}
+      </div>
 
       {/* Music control panel */}
       <div
@@ -451,6 +484,15 @@ const Index = () => {
                     <WishCard name={name} countdown={countdown} compact />
                   </div>
                 </div>
+
+                <button
+                  type="button"
+                  onClick={resetDefaults}
+                  className="w-full action-btn action-btn-secondary"
+                  aria-label="Reset title, countdown, and music settings to defaults"
+                >
+                  ↺ Reset to defaults
+                </button>
               </div>
             )}
           </aside>

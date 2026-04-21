@@ -169,6 +169,7 @@ const Index = () => {
       } else if (volume === 0) {
         setVolume(prevVolumeRef.current || 0.6);
       }
+      setAudioStatus(next ? "Music muted" : "Music unmuted");
       return next;
     });
   };

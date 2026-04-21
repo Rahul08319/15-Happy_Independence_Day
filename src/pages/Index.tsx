@@ -310,6 +310,11 @@ const Index = () => {
 
       <audio ref={audioRef} src={vandemataram} loop preload="auto" aria-label="Vande Mataram instrumental" />
 
+      {/* Screen-reader announcements for music state */}
+      <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">
+        {audioStatus}
+      </div>
+
       {/* Music control panel */}
       <div
         className="music-panel fixed top-4 right-4 z-30 flex items-center gap-3 rounded-full px-4 py-2 shadow-lg"

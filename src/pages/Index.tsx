@@ -126,9 +126,49 @@ const Index = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.6);
+  const [isMuted, setIsMuted] = useState(false);
+  const prevVolumeRef = useRef(0.6);
 
   useEffect(() => {
-    if (audioRef.current) audioRef.current.volume = volume;
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+      audioRef.current.muted = isMuted;
+    }
+  }, [volume, isMuted]);
+
+  const toggleMute = () => {
+    setIsMuted((m) => {
+      const next = !m;
+      if (next) {
+        prevVolumeRef.current = volume;
+      } else if (volume === 0) {
+        setVolume(prevVolumeRef.current || 0.6);
+      }
+      return next;
+    });
+  };
+
+  // Keyboard shortcuts: M = mute toggle, Space (when not in input) = play/pause, ↑/↓ = volume
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement)?.tagName;
+      const isField = tag === "INPUT" || tag === "TEXTAREA" || (e.target as HTMLElement)?.isContentEditable;
+      if (isField) return;
+      if (e.key.toLowerCase() === "m") {
+        e.preventDefault();
+        toggleMute();
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        setVolume((v) => Math.min(1, +(v + 0.05).toFixed(2)));
+        setIsMuted(false);
+      } else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        setVolume((v) => Math.max(0, +(v - 0.05).toFixed(2)));
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [volume]);
 
   const toggleAudio = async () => {

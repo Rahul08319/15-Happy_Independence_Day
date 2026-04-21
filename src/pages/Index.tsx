@@ -115,12 +115,37 @@ const Index = () => {
     () => (typeof window !== "undefined" ? new URLSearchParams(window.location.search) : new URLSearchParams()),
     []
   );
-  const initialName = params.get("name") || "";
-  const initialDate = params.get("date") || DEFAULT_TARGET;
+  const initialName = params.get("name") || (typeof window !== "undefined" ? localStorage.getItem("idw:name") || "" : "");
+  const initialDate = params.get("date") || (typeof window !== "undefined" ? localStorage.getItem("idw:date") || DEFAULT_TARGET : DEFAULT_TARGET);
 
   const [name, setName] = useState<string>(initialName);
   const [targetDate, setTargetDate] = useState<string>(initialDate);
   const [showEditor, setShowEditor] = useState<boolean>(!initialName);
+  const [audioStatus, setAudioStatus] = useState<string>("");
+
+  // Persist edits to localStorage
+  useEffect(() => {
+    try { localStorage.setItem("idw:name", name); } catch {}
+  }, [name]);
+  useEffect(() => {
+    try { localStorage.setItem("idw:date", targetDate); } catch {}
+  }, [targetDate]);
+
+  const resetDefaults = () => {
+    setName("");
+    setTargetDate(DEFAULT_TARGET);
+    setVolume(0.6);
+    setIsMuted(false);
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
+    setIsPlaying(false);
+    try {
+      localStorage.removeItem("idw:name");
+      localStorage.removeItem("idw:date");
+    } catch {}
+    toast({ title: "Reset", description: "Title, countdown, and music restored to defaults." });
+  };
   const countdown = useCountdown(targetDate);
   const cardRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);

@@ -147,6 +147,26 @@ figure.wobble {
   text-align: center;
   border: 0;
 }
-.share-btn.whatsapp { background-color: #4caf50; }
-.share-btn.facebook { background-color: #405d9b; }
-.share-btn.download { background-color: #ed5600; }
+.share-btn.whatsapp { background-color: #1f7a2a; }
+.share-btn.facebook { background-color: #1e3a8a; }
+.share-btn.download { background-color: #b34000; }
+.share-btn:focus-visible { outline: 3px solid #fff; outline-offset: -3px; }
+
+/* Action buttons (export/share) */
+.action-btn {
+  @apply rounded-lg px-4 py-3 font-semibold text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring;
+}
+.action-btn-primary { @apply bg-primary text-primary-foreground hover:opacity-90 hover:scale-[1.02]; }
+.action-btn-secondary { @apply bg-secondary text-secondary-foreground border border-border hover:bg-accent; }
+.action-btn-accent {
+  background: linear-gradient(135deg, hsl(var(--saffron)), hsl(var(--india-green)));
+  color: #fff;
+  @apply hover:opacity-95 hover:scale-[1.01] shadow-md;
+}
+
+/* Editor panel — high-contrast surface */
+.editor-panel {
+  background: hsl(0 0% 100% / 0.92);
+  border: 1px solid hsl(var(--border));
+  box-shadow: 0 10px 30px -10px hsl(var(--india-blue) / 0.3);
+}

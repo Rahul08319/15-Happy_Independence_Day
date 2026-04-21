@@ -283,7 +283,11 @@ const Index = () => {
       <audio ref={audioRef} src={vandemataram} loop preload="auto" aria-label="Vande Mataram instrumental" />
 
       {/* Music control panel */}
-      <div className="music-panel fixed top-4 right-4 z-30 flex items-center gap-3 rounded-full px-4 py-2 shadow-lg">
+      <div
+        className="music-panel fixed top-4 right-4 z-30 flex items-center gap-3 rounded-full px-4 py-2 shadow-lg"
+        role="group"
+        aria-label="Background music controls (M to mute, Space to play, Arrow Up/Down for volume)"
+      >
         <button
           type="button"
           onClick={toggleAudio}
@@ -294,19 +298,33 @@ const Index = () => {
           <span aria-hidden="true" className="text-base">{isPlaying ? "⏸" : "▶"}</span>
           <span className="hidden sm:inline">{isPlaying ? "Pause" : "Vande Mataram"}</span>
         </button>
-        <div className="flex items-center gap-2">
-          <span aria-hidden="true" className="text-white text-sm">🔉</span>
-          <input
-            type="range"
-            min={0}
-            max={1}
-            step={0.05}
-            value={volume}
-            onChange={(e) => setVolume(parseFloat(e.target.value))}
-            className="volume-slider w-20"
-            aria-label="Background music volume"
-          />
-        </div>
+        <button
+          type="button"
+          onClick={toggleMute}
+          className="text-white text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-full px-1"
+          aria-label={isMuted ? "Unmute background music (M)" : "Mute background music (M)"}
+          aria-pressed={isMuted}
+          title="Mute (M)"
+        >
+          <span aria-hidden="true">{isMuted || volume === 0 ? "🔇" : "🔉"}</span>
+        </button>
+        <input
+          type="range"
+          min={0}
+          max={1}
+          step={0.05}
+          value={isMuted ? 0 : volume}
+          onChange={(e) => {
+            const v = parseFloat(e.target.value);
+            setVolume(v);
+            if (v > 0 && isMuted) setIsMuted(false);
+          }}
+          className="volume-slider w-20"
+          aria-label="Background music volume"
+          aria-valuemin={0}
+          aria-valuemax={1}
+          aria-valuenow={isMuted ? 0 : volume}
+        />
       </div>
 
       {/* Decorative side marquees */}

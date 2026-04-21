@@ -1,7 +1,21 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import confetti from "canvas-confetti";
 import { toast } from "@/hooks/use-toast";
+
+const TRICOLORS = ["#FF9933", "#FFFFFF", "#138808", "#1e3a8a"];
+
+const fireTricolorConfetti = () => {
+  if (typeof window === "undefined") return;
+  if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+  const defaults = { colors: TRICOLORS, zIndex: 60, disableForReducedMotion: true };
+  confetti({ ...defaults, particleCount: 80, spread: 70, origin: { x: 0.2, y: 0.8 }, angle: 60 });
+  confetti({ ...defaults, particleCount: 80, spread: 70, origin: { x: 0.8, y: 0.8 }, angle: 120 });
+  setTimeout(() => {
+    confetti({ ...defaults, particleCount: 120, spread: 100, startVelocity: 45, origin: { x: 0.5, y: 0.6 } });
+  }, 250);
+};
 import flower1 from "@/assets/123.png";
 import flower2 from "@/assets/124.png";
 import bb from "@/assets/bb.gif";
@@ -214,11 +228,11 @@ const Index = () => {
     }
   };
 
-  // Prompt only if no name in URL and editor is dismissed without entering one
+  // Celebrate on mount
   useEffect(() => {
-    if (initialName) return;
-    // Editor open by default, no prompt needed
-  }, [initialName]);
+    const t = setTimeout(() => fireTricolorConfetti(), 400);
+    return () => clearTimeout(t);
+  }, []);
 
   const exportAs = async (kind: "png" | "pdf") => {
     if (!cardRef.current) return;
@@ -255,6 +269,7 @@ const Index = () => {
     url.searchParams.set("date", targetDate);
     try {
       await navigator.clipboard.writeText(url.toString());
+      fireTricolorConfetti();
       toast({ title: "Link copied", description: "Share it anywhere — it preloads the name & countdown." });
     } catch {
       window.prompt("Copy this link:", url.toString());
@@ -420,6 +435,14 @@ const Index = () => {
                 aria-label="Copy shareable link with your name and countdown preloaded"
               >
                 🔗 Copy Shareable Link
+              </button>
+              <button
+                type="button"
+                onClick={fireTricolorConfetti}
+                className="action-btn action-btn-accent col-span-2 animate-fade-in"
+                aria-label="Launch celebratory tricolor confetti"
+              >
+                🎉 Celebrate!
               </button>
             </div>
           </section>

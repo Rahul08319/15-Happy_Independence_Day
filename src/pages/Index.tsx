@@ -23,7 +23,15 @@ import snow from "@/assets/snow.gif";
 import wp from "@/assets/wp.png";
 import vandemataram from "@/assets/vandemataram.mp3";
 
-const DEFAULT_TARGET = "2026-08-15T00:00:00";
+const getNextIndependenceDay = (): string => {
+  const now = new Date();
+  const year = now.getFullYear();
+  const thisYear = new Date(`${year}-08-15T00:00:00`);
+  const targetYear = now < thisYear ? year : year + 1;
+  return `${targetYear}-08-15T00:00:00`;
+};
+
+const DEFAULT_TARGET = getNextIndependenceDay();
 
 const useCountdown = (targetISO: string) => {
   const [countdown, setCountdown] = useState("");
@@ -130,7 +138,10 @@ const Index = () => {
     []
   );
   const initialName = params.get("name") || (typeof window !== "undefined" ? localStorage.getItem("idw:name") || "" : "");
-  const initialDate = params.get("date") || (typeof window !== "undefined" ? localStorage.getItem("idw:date") || DEFAULT_TARGET : DEFAULT_TARGET);
+  const storedDate = params.get("date") || (typeof window !== "undefined" ? localStorage.getItem("idw:date") : null) || null;
+  // Roll forward to the next Independence Day if the stored date is missing, invalid, or in the past
+  const storedTime = storedDate ? new Date(storedDate).getTime() : NaN;
+  const initialDate = Number.isFinite(storedTime) && storedTime > Date.now() ? storedDate! : DEFAULT_TARGET;
 
   const [name, setName] = useState<string>(initialName);
   const [targetDate, setTargetDate] = useState<string>(initialDate);

@@ -23,7 +23,15 @@ import snow from "@/assets/snow.gif";
 import wp from "@/assets/wp.png";
 import vandemataram from "@/assets/vandemataram.mp3";
 
-const DEFAULT_TARGET = "2026-08-15T00:00:00";
+const getNextIndependenceDay = (): string => {
+  const now = new Date();
+  const year = now.getFullYear();
+  const thisYear = new Date(`${year}-08-15T00:00:00`);
+  const targetYear = now < thisYear ? year : year + 1;
+  return `${targetYear}-08-15T00:00:00`;
+};
+
+const DEFAULT_TARGET = getNextIndependenceDay();
 
 const useCountdown = (targetISO: string) => {
   const [countdown, setCountdown] = useState("");

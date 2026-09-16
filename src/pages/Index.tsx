@@ -138,7 +138,10 @@ const Index = () => {
     []
   );
   const initialName = params.get("name") || (typeof window !== "undefined" ? localStorage.getItem("idw:name") || "" : "");
-  const initialDate = params.get("date") || (typeof window !== "undefined" ? localStorage.getItem("idw:date") || DEFAULT_TARGET : DEFAULT_TARGET);
+  const storedDate = params.get("date") || (typeof window !== "undefined" ? localStorage.getItem("idw:date") : null) || null;
+  // Roll forward to the next Independence Day if the stored date is missing, invalid, or in the past
+  const storedTime = storedDate ? new Date(storedDate).getTime() : NaN;
+  const initialDate = Number.isFinite(storedTime) && storedTime > Date.now() ? storedDate! : DEFAULT_TARGET;
 
   const [name, setName] = useState<string>(initialName);
   const [targetDate, setTargetDate] = useState<string>(initialDate);

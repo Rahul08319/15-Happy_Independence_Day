@@ -17,6 +17,10 @@ import {
   Flag,
   Type,
   Users,
+  Music,
+  ShieldCheck,
+  Layers,
+  Smartphone,
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import AshokaChakra from "@/components/AshokaChakra";
@@ -34,13 +38,13 @@ const fireCelebrationConfetti = () => {
   if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
 
   const defaults = { colors: TRICOLORS, zIndex: 9999, disableForReducedMotion: true };
-  confetti({ ...defaults, particleCount: 65, spread: 65, origin: { x: 0.15, y: 0.8 }, angle: 55 });
-  confetti({ ...defaults, particleCount: 65, spread: 65, origin: { x: 0.85, y: 0.8 }, angle: 125 });
+  confetti({ ...defaults, particleCount: 70, spread: 70, origin: { x: 0.15, y: 0.8 }, angle: 55 });
+  confetti({ ...defaults, particleCount: 70, spread: 70, origin: { x: 0.85, y: 0.8 }, angle: 125 });
 
   setTimeout(() => {
     confetti({
       ...defaults,
-      particleCount: 120,
+      particleCount: 130,
       spread: 120,
       startVelocity: 50,
       origin: { x: 0.5, y: 0.55 },
@@ -94,7 +98,7 @@ const useCountdown = (targetISO: string): CountdownTime => {
   return time;
 };
 
-// Main Greeting Card Component with 3D Interactive Tilt & Dynamic Milestones
+// Main Greeting Card with Apple Liquid Glass Specular & 3D Interactive Spring Tilt
 const WishCard = ({
   senderName,
   recipientName,
@@ -132,13 +136,13 @@ const WishCard = ({
     const y = e.clientY - rect.top;
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    const rotateX = -((y - centerY) / centerY) * 7;
-    const rotateY = ((x - centerX) / centerX) * 7;
+    const rotateX = -((y - centerY) / centerY) * 7.5;
+    const rotateY = ((x - centerX) / centerX) * 7.5;
     setRotate({ x: rotateX, y: rotateY });
     setSheen({
       x: (x / rect.width) * 100,
       y: (y / rect.height) * 100,
-      opacity: 0.16,
+      opacity: 0.18,
     });
   };
 
@@ -149,23 +153,19 @@ const WishCard = ({
 
   const themeStyles = {
     midnight: {
-      bg: "linear-gradient(165deg, #0b1329 0%, #060913 50%, #0d1b3e 100%)",
-      border: "rgba(212, 175, 55, 0.45)",
+      bg: "linear-gradient(165deg, rgba(11,19,41,0.85) 0%, rgba(6,9,19,0.92) 50%, rgba(13,27,62,0.88) 100%)",
       badgeBg: "bg-amber-500/15 text-amber-300 border-amber-500/30",
     },
     saffron: {
-      bg: "linear-gradient(165deg, #2b1104 0%, #150802 50%, #3d1704 100%)",
-      border: "rgba(255, 103, 31, 0.5)",
+      bg: "linear-gradient(165deg, rgba(43,17,4,0.88) 0%, rgba(21,8,2,0.94) 50%, rgba(61,23,4,0.88) 100%)",
       badgeBg: "bg-orange-500/15 text-orange-300 border-orange-500/30",
     },
     tiranga: {
-      bg: "linear-gradient(165deg, #131d2e 0%, #0a111c 50%, #0c231a 100%)",
-      border: "rgba(255, 255, 255, 0.35)",
+      bg: "linear-gradient(165deg, rgba(19,29,46,0.85) 0%, rgba(10,17,28,0.92) 50%, rgba(12,35,26,0.88) 100%)",
       badgeBg: "bg-white/10 text-white border-white/20",
     },
     emerald: {
-      bg: "linear-gradient(165deg, #062419 0%, #03140e 50%, #083424 100%)",
-      border: "rgba(4, 106, 56, 0.6)",
+      bg: "linear-gradient(165deg, rgba(6,36,25,0.88) 0%, rgba(3,20,14,0.94) 50%, rgba(8,52,36,0.88) 100%)",
       badgeBg: "bg-emerald-500/15 text-emerald-300 border-emerald-500/30",
     },
   }[theme];
@@ -181,43 +181,43 @@ const WishCard = ({
     <div
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative mx-auto rounded-[1.75rem] p-[2px] cursor-pointer select-none transition-transform duration-150 ease-out shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85)]"
+      className="relative mx-auto rounded-[2.25rem] p-[2px] cursor-pointer select-none transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[0_30px_70px_-15px_rgba(0,0,0,0.9)]"
       style={{
         maxWidth: compact ? 340 : 480,
         transform: compact ? "none" : `perspective(1000px) rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`,
-        background: `linear-gradient(135deg, #FF671F 0%, #FFFFFF 35%, #D4AF37 50%, #FFFFFF 65%, #046A38 100%)`,
+        background: `linear-gradient(135deg, rgba(255,103,31,0.9) 0%, rgba(255,255,255,0.95) 35%, rgba(212,175,55,0.9) 50%, rgba(255,255,255,0.95) 65%, rgba(4,106,56,0.9) 100%)`,
       }}
     >
       <div
         ref={cardRef}
-        className="relative rounded-[1.65rem] px-6 py-7 text-center overflow-hidden"
+        className="relative rounded-[2.15rem] px-7 py-8 text-center overflow-hidden backdrop-blur-2xl border border-white/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.4)]"
         style={{ background: themeStyles.bg }}
       >
-        {/* Holographic interactive sheen overlay */}
+        {/* Apple Liquid Glass Specular Arc */}
         <div
-          className="pointer-events-none absolute inset-0 z-20 transition-opacity duration-300 rounded-[1.65rem]"
+          className="pointer-events-none absolute inset-0 z-20 transition-opacity duration-300 rounded-[2.15rem]"
           style={{
-            background: `radial-gradient(circle at ${sheen.x}% ${sheen.y}%, rgba(255,255,255,${sheen.opacity}) 0%, transparent 60%)`,
+            background: `radial-gradient(ellipse 80% 45% at ${sheen.x}% ${sheen.y}%, rgba(255,255,255,${sheen.opacity}) 0%, transparent 60%)`,
           }}
         />
 
-        {/* Subtle Watermark Chakra */}
-        <div className="pointer-events-none absolute -right-12 -top-12 opacity-[0.06] select-none">
-          <AshokaChakra size={260} animate={false} color="#ffffff" />
+        {/* Watermark Ashoka Chakra Background */}
+        <div className="pointer-events-none absolute -right-14 -top-14 opacity-[0.05] select-none">
+          <AshokaChakra size={280} animate={false} color="#ffffff" />
         </div>
-        <div className="pointer-events-none absolute -left-12 -bottom-12 opacity-[0.06] select-none">
-          <AshokaChakra size={260} animate={false} color="#ffffff" />
+        <div className="pointer-events-none absolute -left-14 -bottom-14 opacity-[0.05] select-none">
+          <AshokaChakra size={280} animate={false} color="#ffffff" />
         </div>
 
-        {/* Top Header Badge with Auto-Calculated Edition & Year */}
+        {/* Top Header Badge */}
         <div className="relative z-10 flex items-center justify-between gap-2 border-b border-white/10 pb-4">
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-2">
             <span className="text-base select-none">🇮🇳</span>
-            <span className="text-[11px] font-bold tracking-widest uppercase text-slate-300">
+            <span className="text-[11px] font-bold tracking-[0.12em] uppercase text-slate-300">
               Azadi Ka Mahotsav · {ordinalEdition} Edition
             </span>
           </div>
-          <div className={`px-2.5 py-0.5 rounded-full text-[10px] font-semibold border ${themeStyles.badgeBg}`}>
+          <div className={`px-3 py-0.5 rounded-full text-[10px] font-semibold border ${themeStyles.badgeBg}`}>
             15th August {targetYear}
           </div>
         </div>
@@ -225,19 +225,18 @@ const WishCard = ({
         {/* Dedicated Recipient Banner */}
         {recipientName && (
           <div className="relative z-10 mt-4 inline-block">
-            <span className="text-[11px] font-medium tracking-wide text-amber-200/90 uppercase px-3.5 py-1 rounded-full bg-amber-400/10 border border-amber-400/25 shadow-sm">
+            <span className="text-[11px] font-medium tracking-wide text-amber-200/90 uppercase px-4 py-1 rounded-full bg-amber-400/10 border border-amber-400/25 shadow-sm">
               Dedicated to: <strong className="font-bold text-white">{recipientName}</strong>
             </span>
           </div>
         )}
 
         {/* Center Ashoka Chakra Medallion */}
-        <div className="relative z-10 my-5 flex justify-center">
+        <div className="relative z-10 my-6 flex justify-center">
           <div className="relative flex items-center justify-center">
-            {/* Ambient Halo */}
-            <div className="absolute h-24 w-24 rounded-full bg-amber-400/15 blur-xl pointer-events-none" />
-            <div className="relative rounded-full p-2.5 bg-slate-950/80 border border-amber-400/40 shadow-[0_0_20px_rgba(212,175,55,0.2)]">
-              <AshokaChakra size={compact ? 52 : 68} color="#2563eb" animate={true} />
+            <div className="absolute h-28 w-28 rounded-full bg-amber-400/15 blur-2xl pointer-events-none" />
+            <div className="relative rounded-full p-3 bg-slate-950/80 border border-amber-400/40 shadow-[0_0_25px_rgba(212,175,55,0.25)]">
+              <AshokaChakra size={compact ? 54 : 70} color="#3b82f6" animate={true} />
             </div>
           </div>
         </div>
@@ -251,20 +250,20 @@ const WishCard = ({
         </h2>
 
         {/* Tricolor Ribbon Accent */}
-        <div className="my-3 mx-auto h-[3px] w-32 rounded-full bg-gradient-to-r from-[#FF671F] via-[#FFFFFF] to-[#046A38] opacity-90 shadow" />
+        <div className="my-3.5 mx-auto h-[3px] w-36 rounded-full bg-gradient-to-r from-[#FF671F] via-[#FFFFFF] to-[#046A38] opacity-90 shadow" />
 
-        {/* Countdown Tiles */}
-        <div className="relative z-10 my-4">
-          <div className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-2">
+        {/* Countdown Tiles with Apple Glass Polish */}
+        <div className="relative z-10 my-5">
+          <div className="text-[11px] font-semibold uppercase tracking-[0.1em] text-slate-400 mb-2.5">
             {countdown.isComplete ? "Celebration In Progress" : `Countdown to 15th August ${targetYear}`}
           </div>
 
           {countdown.isComplete ? (
-            <div className="py-2.5 px-4 rounded-xl bg-gradient-to-r from-amber-500/20 via-emerald-500/20 to-blue-500/20 border border-amber-400/30 text-amber-200 font-bold text-sm">
+            <div className="py-3 px-4 rounded-2xl bg-gradient-to-r from-amber-500/20 via-emerald-500/20 to-blue-500/20 border border-amber-400/35 text-amber-200 font-bold text-sm shadow-inner">
               🇮🇳 Happy Independence Day! Jai Hind! 🇮🇳
             </div>
           ) : (
-            <div className="grid grid-cols-4 gap-2 max-w-[340px] mx-auto">
+            <div className="grid grid-cols-4 gap-2.5 max-w-[350px] mx-auto">
               {[
                 { val: countdown.days, label: "Days", color: "text-amber-400" },
                 { val: countdown.hours, label: "Hours", color: "text-orange-300" },
@@ -273,12 +272,12 @@ const WishCard = ({
               ].map((item, i) => (
                 <div
                   key={i}
-                  className="rounded-xl bg-slate-950/70 border border-white/10 p-2 shadow-inner text-center"
+                  className="rounded-2xl bg-slate-950/75 border border-white/12 p-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.15)] text-center transition-transform hover:scale-105"
                 >
-                  <div className={`text-lg font-black tracking-tight ${item.color}`}>
+                  <div className={`text-xl font-black tracking-tight ${item.color}`}>
                     {String(item.val).padStart(2, "0")}
                   </div>
-                  <div className="text-[9px] font-semibold uppercase tracking-wider text-slate-400">
+                  <div className="text-[9px] font-semibold uppercase tracking-wider text-slate-400 mt-0.5">
                     {item.label}
                   </div>
                 </div>
@@ -288,22 +287,22 @@ const WishCard = ({
         </div>
 
         {/* Patriotic Quote Box */}
-        <div className="relative z-10 my-4 rounded-2xl bg-white/[0.04] border border-white/10 p-3.5 text-slate-200 shadow-inner">
+        <div className="relative z-10 my-4 rounded-2xl bg-white/[0.04] border border-white/10 p-4 text-slate-200 shadow-inner backdrop-blur-sm">
           <p
             className="italic leading-relaxed text-slate-200 font-serif"
-            style={{ fontSize: compact ? 12 : 13 }}
+            style={{ fontSize: compact ? 12 : 13.5 }}
           >
             "{message}"
           </p>
           {author && (
-            <div className="mt-1.5 text-right text-[11px] font-semibold text-amber-400">
+            <div className="mt-2 text-right text-[11px] font-semibold text-amber-400">
               — {author}
             </div>
           )}
         </div>
 
         {/* Signature From Sender */}
-        <div className="relative z-10 mt-5 pt-3 border-t border-white/10">
+        <div className="relative z-10 mt-5 pt-3.5 border-t border-white/10">
           <div className="text-[11px] font-medium tracking-wide text-slate-400">
             Warm wishes with pride &amp; honor from
           </div>
@@ -313,12 +312,12 @@ const WishCard = ({
           >
             {senderName || "Your Name"}
           </div>
-          <div className="mt-1 text-[10px] text-slate-400 font-semibold tracking-widest uppercase">
+          <div className="mt-1 text-[10px] text-slate-400 font-semibold tracking-[0.12em] uppercase">
             Jai Hind · Vande Mataram
           </div>
         </div>
 
-        {/* Card Bottom Tricolor Ribbon */}
+        {/* Bottom Tricolor Ribbon */}
         <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#FF671F] via-[#FFFFFF] to-[#046A38]" />
       </div>
     </div>
@@ -347,7 +346,6 @@ const Index = () => {
     (params.get("font") as CardFontStyle) ||
     (typeof window !== "undefined" ? (localStorage.getItem("idw:font") as CardFontStyle) || "serif" : "serif");
 
-  // Verify stored target date: if it's already expired/in the past, roll forward automatically to coming year!
   const storedDate =
     params.get("date") || (typeof window !== "undefined" ? localStorage.getItem("idw:date") : null) || null;
   const storedTime = storedDate ? new Date(storedDate).getTime() : NaN;
@@ -458,7 +456,7 @@ const Index = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [volume, isPlaying, isMuted]);
 
-  // Initial confetti burst on mount
+  // Initial celebratory confetti
   useEffect(() => {
     const timer = setTimeout(() => {
       fireCelebrationConfetti();
@@ -581,40 +579,40 @@ const Index = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#070c18] text-slate-100 selection:bg-amber-500 selection:text-black pb-28">
+    <div className="relative min-h-screen bg-[#050811] text-slate-100 selection:bg-amber-500 selection:text-black pb-28">
       {/* Dynamic Celebration Embers & Floating Lights Canvas */}
       <CelebrationCanvas />
 
-      {/* Ambient Patriotic Aurora Glow in Background */}
+      {/* Ambient Patriotic Aurora Mesh */}
       <div className="patriotic-aurora" aria-hidden="true">
         <div
           className="aurora-orb animate-orb-1"
           style={{
-            width: 450,
-            height: 450,
+            width: 480,
+            height: 480,
             top: "5%",
             left: "5%",
-            background: "radial-gradient(circle, rgba(255, 103, 31, 0.22) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(255, 103, 31, 0.24) 0%, transparent 70%)",
           }}
         />
         <div
           className="aurora-orb animate-orb-2"
           style={{
-            width: 500,
-            height: 500,
+            width: 520,
+            height: 520,
             bottom: "5%",
             right: "5%",
-            background: "radial-gradient(circle, rgba(4, 106, 56, 0.22) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(4, 106, 56, 0.24) 0%, transparent 70%)",
           }}
         />
         <div
           className="aurora-orb"
           style={{
-            width: 350,
-            height: 350,
+            width: 380,
+            height: 380,
             top: "40%",
             left: "40%",
-            background: "radial-gradient(circle, rgba(6, 3, 141, 0.18) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(6, 3, 141, 0.20) 0%, transparent 70%)",
           }}
         />
       </div>
@@ -622,33 +620,29 @@ const Index = () => {
       {/* Audio element */}
       <audio ref={audioRef} src={vandemataram} loop preload="auto" />
 
-      {/* Top Header Navigation */}
-      <header className="relative z-30 border-b border-white/10 bg-slate-950/60 backdrop-blur-xl">
-        <div className="container mx-auto flex items-center justify-between px-4 py-3.5">
-          {/* Logo & Brand */}
-          <div className="flex items-center gap-3">
-            <div className="relative flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-tr from-amber-500 via-orange-500 to-emerald-500 p-[1px] shadow-lg">
+      {/* Apple Floating Island Navigation Capsule */}
+      <nav className="fixed top-4 left-0 right-0 z-40 flex justify-center px-4">
+        <div className="apple-floating-island flex items-center justify-between gap-3 sm:gap-6 rounded-full px-4 py-2.5 max-w-4xl w-full shadow-2xl transition-all duration-300">
+          {/* Brand Pill */}
+          <div className="flex items-center gap-2.5">
+            <div className="relative flex h-9 w-9 items-center justify-center rounded-2xl bg-gradient-to-tr from-amber-500 via-orange-500 to-emerald-500 p-[1.5px] shadow-md transition-transform hover:scale-105 active:scale-95">
               <div className="flex h-full w-full items-center justify-center rounded-2xl bg-slate-950">
-                <AshokaChakra size={24} color="#3b82f6" animate={true} />
+                <AshokaChakra size={22} color="#3b82f6" animate={true} />
               </div>
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h1 className="text-base font-extrabold tracking-tight text-white font-sans">
-                  Pixel Perfect
-                </h1>
-                <span className="rounded-md bg-gradient-to-r from-amber-500 to-orange-500 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-slate-950">
-                  Tiranga
+            <div className="hidden sm:block">
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs font-black tracking-tight text-white">Pixel Perfect</span>
+                <span className="rounded-full bg-amber-500/20 px-2 py-0.5 text-[9px] font-bold text-amber-300 border border-amber-500/30">
+                  {autoInfo.targetYear}
                 </span>
               </div>
-              <p className="text-[11px] text-slate-400 font-medium">
-                Indian Independence Day Studio · {autoInfo.targetYear}
-              </p>
+              <p className="text-[10px] text-slate-400 font-medium">Tiranga Celebration Studio</p>
             </div>
           </div>
 
-          {/* Controls: Music Player & Confetti */}
-          <div className="flex items-center gap-2.5">
+          {/* Center & Right Controls */}
+          <div className="flex items-center gap-2 sm:gap-3">
             <MusicPlayer
               isPlaying={isPlaying}
               isMuted={isMuted}
@@ -664,7 +658,7 @@ const Index = () => {
             <button
               type="button"
               onClick={fireCelebrationConfetti}
-              className="flex items-center gap-1.5 rounded-full bg-gradient-to-r from-amber-500 to-emerald-500 px-3.5 py-2 text-xs font-bold text-slate-950 shadow-md transition hover:scale-105 active:scale-95"
+              className="apple-btn flex items-center gap-1.5 rounded-full bg-gradient-to-r from-amber-500 to-emerald-500 px-3.5 py-1.5 text-xs font-bold text-slate-950 shadow-md transition active:scale-95"
               aria-label="Launch celebratory fireworks confetti"
             >
               <Sparkles className="h-3.5 w-3.5" />
@@ -672,13 +666,13 @@ const Index = () => {
             </button>
           </div>
         </div>
-      </header>
+      </nav>
 
       {/* Main Studio Section */}
-      <main className="container mx-auto px-4 pt-8 pb-16 relative z-10">
-        {/* Banner Hero with Dynamic Milestone Info */}
-        <div className="text-center max-w-2xl mx-auto mb-8">
-          <div className="inline-flex items-center gap-2 rounded-full border border-amber-400/30 bg-amber-400/10 px-3.5 py-1 text-xs font-semibold text-amber-300 backdrop-blur-md mb-3">
+      <main className="container mx-auto px-4 pt-28 pb-16 relative z-10">
+        {/* Banner Hero with Apple Typography & Tight Tracking */}
+        <div className="text-center max-w-2xl mx-auto mb-10">
+          <div className="inline-flex items-center gap-2 rounded-full border border-amber-400/30 bg-amber-400/10 px-4 py-1 text-xs font-semibold text-amber-300 backdrop-blur-xl mb-3 shadow-inner">
             <Flag className="h-3.5 w-3.5 text-amber-400" />
             <span>{autoInfo.heroBadgeText}</span>
           </div>
@@ -691,15 +685,15 @@ const Index = () => {
             </div>
           )}
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white font-sans">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-[-0.03em] text-white leading-[1.08] font-sans">
             Personalized <span className="gold-shimmer-text font-serif">Patriotic Greetings</span>
-          </h2>
-          <p className="mt-2 text-sm sm:text-base text-slate-400 max-w-xl mx-auto font-medium">
-            Hover over the card to explore the 3D foil reflection. Customize typography, dedications, and themes. Automatically rolling forward for {autoInfo.targetYear} &amp; future years.
+          </h1>
+          <p className="mt-3 text-sm sm:text-base text-slate-400 max-w-xl mx-auto font-medium leading-relaxed">
+            Interact with the 3D Liquid Glass card. Customize typography, dedications, and themes. Automatically rolling forward for {autoInfo.targetYear} and beyond.
           </p>
         </div>
 
-        {/* Studio Grid: Left Card, Right Customizer */}
+        {/* Studio Grid: Left 3D Card, Right Customizer Panel */}
         <div className="grid lg:grid-cols-[1fr_450px] gap-8 items-start max-w-6xl mx-auto">
           {/* Card Presentation Stage */}
           <div className="flex flex-col items-center">
@@ -719,13 +713,13 @@ const Index = () => {
               />
             </div>
 
-            {/* Quick Action Buttons */}
+            {/* Apple Style Glass Action Buttons */}
             <div className="w-full max-w-[480px] mt-6 grid grid-cols-2 sm:grid-cols-4 gap-2.5">
               <button
                 type="button"
                 onClick={exportAsPng}
                 disabled={isExporting}
-                className="flex items-center justify-center gap-1.5 rounded-xl bg-slate-900 border border-white/15 px-3 py-2.5 text-xs font-bold text-white shadow-md transition hover:bg-slate-800 hover:border-amber-400/50 disabled:opacity-50"
+                className="apple-glass-pill flex items-center justify-center gap-1.5 px-3 py-2.5 text-xs font-bold text-white disabled:opacity-50"
               >
                 <Download className="h-4 w-4 text-amber-400" />
                 <span>PNG Card</span>
@@ -735,16 +729,16 @@ const Index = () => {
                 type="button"
                 onClick={exportAsPdf}
                 disabled={isExporting}
-                className="flex items-center justify-center gap-1.5 rounded-xl bg-slate-900 border border-white/15 px-3 py-2.5 text-xs font-bold text-white shadow-md transition hover:bg-slate-800 hover:border-amber-400/50 disabled:opacity-50"
+                className="apple-glass-pill flex items-center justify-center gap-1.5 px-3 py-2.5 text-xs font-bold text-white disabled:opacity-50"
               >
                 <FileText className="h-4 w-4 text-orange-400" />
-                <span>PDF Document</span>
+                <span>PDF Doc</span>
               </button>
 
               <button
                 type="button"
                 onClick={copyShareLink}
-                className="flex items-center justify-center gap-1.5 rounded-xl bg-slate-900 border border-white/15 px-3 py-2.5 text-xs font-bold text-white shadow-md transition hover:bg-slate-800 hover:border-amber-400/50"
+                className="apple-glass-pill flex items-center justify-center gap-1.5 px-3 py-2.5 text-xs font-bold text-white"
               >
                 {copiedLink ? (
                   <>
@@ -762,7 +756,7 @@ const Index = () => {
               <button
                 type="button"
                 onClick={() => setIsQrOpen(true)}
-                className="flex items-center justify-center gap-1.5 rounded-xl bg-slate-900 border border-white/15 px-3 py-2.5 text-xs font-bold text-white shadow-md transition hover:bg-slate-800 hover:border-amber-400/50"
+                className="apple-glass-pill flex items-center justify-center gap-1.5 px-3 py-2.5 text-xs font-bold text-white"
               >
                 <QrCode className="h-4 w-4 text-blue-400" />
                 <span>QR Code</span>
@@ -771,11 +765,11 @@ const Index = () => {
           </div>
 
           {/* Customization Studio Panel */}
-          <div className="w-full rounded-2xl bg-slate-900/85 border border-white/15 p-5 shadow-2xl backdrop-blur-xl">
+          <div className="w-full rounded-[2rem] bg-slate-900/80 border border-white/15 p-6 shadow-2xl backdrop-blur-2xl">
             {/* Panel Header */}
-            <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-4">
-              <div className="flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/30">
+            <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-5">
+              <div className="flex items-center gap-2.5">
+                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/30 shadow-sm">
                   <Palette className="h-4 w-4" />
                 </div>
                 <div>
@@ -791,7 +785,7 @@ const Index = () => {
               <button
                 type="button"
                 onClick={resetAllDefaults}
-                className="flex items-center gap-1 text-[11px] font-semibold text-slate-400 hover:text-white px-2 py-1 rounded-lg border border-white/10 hover:bg-white/5 transition"
+                className="apple-btn flex items-center gap-1 text-[11px] font-semibold text-slate-400 hover:text-white px-2.5 py-1 rounded-full border border-white/10 hover:bg-white/5 transition"
                 title="Reset to defaults"
               >
                 <RotateCcw className="h-3 w-3" />
@@ -799,14 +793,14 @@ const Index = () => {
               </button>
             </div>
 
-            {/* Tab Navigation */}
-            <div className="grid grid-cols-3 gap-1 rounded-xl bg-slate-950 p-1 mb-5">
+            {/* Apple Native Segmented Controls */}
+            <div className="apple-segmented-track grid grid-cols-3 gap-1 mb-6">
               <button
                 type="button"
                 onClick={() => setActiveTab("message")}
-                className={`flex items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-bold transition ${
+                className={`apple-btn flex items-center justify-center gap-1.5 rounded-full py-2 text-xs font-bold transition-all duration-300 ${
                   activeTab === "message"
-                    ? "bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 shadow"
+                    ? "bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 shadow-md"
                     : "text-slate-400 hover:text-white"
                 }`}
               >
@@ -817,9 +811,9 @@ const Index = () => {
               <button
                 type="button"
                 onClick={() => setActiveTab("theme")}
-                className={`flex items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-bold transition ${
+                className={`apple-btn flex items-center justify-center gap-1.5 rounded-full py-2 text-xs font-bold transition-all duration-300 ${
                   activeTab === "theme"
-                    ? "bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 shadow"
+                    ? "bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 shadow-md"
                     : "text-slate-400 hover:text-white"
                 }`}
               >
@@ -830,9 +824,9 @@ const Index = () => {
               <button
                 type="button"
                 onClick={() => setActiveTab("timer")}
-                className={`flex items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-bold transition ${
+                className={`apple-btn flex items-center justify-center gap-1.5 rounded-full py-2 text-xs font-bold transition-all duration-300 ${
                   activeTab === "timer"
-                    ? "bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 shadow"
+                    ? "bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 shadow-md"
                     : "text-slate-400 hover:text-white"
                 }`}
               >
@@ -884,7 +878,7 @@ const Index = () => {
                         key={tag}
                         type="button"
                         onClick={() => setRecipientName(tag)}
-                        className="text-[10px] font-semibold px-2 py-1 rounded-lg bg-slate-950 border border-white/10 text-slate-300 hover:text-white hover:border-amber-400/40 transition"
+                        className="apple-btn text-[10px] font-semibold px-2.5 py-1 rounded-full bg-slate-950 border border-white/10 text-slate-300 hover:text-white hover:border-amber-400/40 transition"
                       >
                         + {tag}
                       </button>
@@ -910,9 +904,7 @@ const Index = () => {
                     <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider">
                       Patriotic Quotes &amp; Wishes
                     </label>
-                    <span className="text-[10px] text-amber-400 font-medium">
-                      Pick a preset
-                    </span>
+                    <span className="text-[10px] text-amber-400 font-medium">Pick a preset</span>
                   </div>
 
                   <div className="space-y-1.5 max-h-40 overflow-y-auto pr-1">
@@ -925,15 +917,13 @@ const Index = () => {
                           setCustomMessage(item.quote);
                           setQuoteAuthor(item.author);
                         }}
-                        className={`w-full text-left p-2.5 rounded-xl border text-xs transition ${
+                        className={`apple-btn w-full text-left p-3 rounded-2xl border text-xs transition ${
                           selectedQuoteId === item.id
-                            ? "bg-amber-500/15 border-amber-400/50 text-white"
+                            ? "bg-amber-500/15 border-amber-400/50 text-white shadow-sm"
                             : "bg-slate-950/60 border-white/10 text-slate-300 hover:border-white/25 hover:bg-slate-950"
                         }`}
                       >
-                        <div className="font-bold text-amber-300 text-[11px]">
-                          {item.author}
-                        </div>
+                        <div className="font-bold text-amber-300 text-[11px]">{item.author}</div>
                         <div className="line-clamp-2 mt-0.5 text-slate-300 text-[11px] leading-relaxed">
                           "{item.quote}"
                         </div>
@@ -978,9 +968,9 @@ const Index = () => {
                         key={f.id}
                         type="button"
                         onClick={() => setCardFont(f.id)}
-                        className={`p-2.5 rounded-xl border text-left transition ${
+                        className={`apple-btn p-3 rounded-2xl border text-left transition ${
                           cardFont === f.id
-                            ? "bg-amber-500/15 border-amber-400 text-white shadow"
+                            ? "bg-amber-500/15 border-amber-400 text-white shadow-sm"
                             : "bg-slate-950/60 border-white/10 text-slate-300 hover:border-white/20"
                         }`}
                       >
@@ -1030,7 +1020,7 @@ const Index = () => {
                         key={t.id}
                         type="button"
                         onClick={() => setCardTheme(t.id)}
-                        className={`w-full flex items-center justify-between p-2.5 rounded-xl border text-left transition ${
+                        className={`apple-btn w-full flex items-center justify-between p-3 rounded-2xl border text-left transition ${
                           cardTheme === t.id
                             ? "bg-amber-500/15 border-amber-400 text-white shadow-lg"
                             : "bg-slate-950/60 border-white/10 text-slate-300 hover:border-white/20"
@@ -1081,7 +1071,7 @@ const Index = () => {
                   <button
                     type="button"
                     onClick={() => setTargetDate(autoInfo.targetISO)}
-                    className="w-full rounded-xl bg-slate-950 border border-white/15 py-2.5 text-xs font-bold text-slate-300 hover:text-white hover:bg-slate-800 transition"
+                    className="apple-btn w-full rounded-full bg-slate-950 border border-white/15 py-2.5 text-xs font-bold text-slate-300 hover:text-white hover:bg-slate-800 transition"
                   >
                     Reset to Next Independence Day (15th August {autoInfo.targetYear})
                   </button>
@@ -1099,11 +1089,64 @@ const Index = () => {
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-500 py-3 text-xs font-bold text-white shadow-lg transition hover:brightness-110 active:scale-98"
+                className="apple-btn w-full flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-500 py-3 text-xs font-bold text-white shadow-lg hover:brightness-110 active:scale-96"
               >
                 <Share2 className="h-4 w-4" />
                 <span>Share Instantly on WhatsApp</span>
               </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Apple Style Bento Grid Showcase */}
+        <div className="mt-20 max-w-6xl mx-auto">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-white font-sans">
+              Engineered with <span className="gold-shimmer-text font-serif">Apple Design Precision</span>
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-400 mt-1">
+              Fluid spring physics, continuous curvature, and Liquid Glass materials.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Bento Box 1: Fluid Physics */}
+            <div className="apple-glass rounded-3xl p-6 relative overflow-hidden transition-transform hover:scale-[1.01]">
+              <div className="h-10 w-10 rounded-2xl bg-amber-500/20 border border-amber-400/30 flex items-center justify-center text-amber-300 mb-4 shadow-sm">
+                <Layers className="h-5 w-5" />
+              </div>
+              <h3 className="text-base font-bold text-white tracking-tight mb-1">
+                Liquid Glass &amp; 3D Sheen
+              </h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Optical depth simulating physical curved glass with interactive specular foil reflection that tracks your cursor.
+              </p>
+            </div>
+
+            {/* Bento Box 2: Lossless Audio */}
+            <div className="apple-glass rounded-3xl p-6 relative overflow-hidden transition-transform hover:scale-[1.01]">
+              <div className="h-10 w-10 rounded-2xl bg-blue-500/20 border border-blue-400/30 flex items-center justify-center text-blue-300 mb-4 shadow-sm">
+                <Music className="h-5 w-5" />
+              </div>
+              <h3 className="text-base font-bold text-white tracking-tight mb-1">
+                Spatial Vande Mataram Audio
+              </h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Embedded instrumental score with real-time waveform visualizer frequency bars, volume slider, and instant keyboard shortcuts.
+              </p>
+            </div>
+
+            {/* Bento Box 3: AirDrop & QR Sharing */}
+            <div className="apple-glass rounded-3xl p-6 relative overflow-hidden transition-transform hover:scale-[1.01]">
+              <div className="h-10 w-10 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-300 mb-4 shadow-sm">
+                <Smartphone className="h-5 w-5" />
+              </div>
+              <h3 className="text-base font-bold text-white tracking-tight mb-1">
+                AirDrop-Style QR &amp; WhatsApp
+              </h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Scan with any iPhone or Android camera to immediately open and share your personalized card on WhatsApp and social stories.
+              </p>
             </div>
           </div>
         </div>
@@ -1118,7 +1161,7 @@ const Index = () => {
             )}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 flex items-center justify-center gap-1.5 rounded-xl bg-emerald-600 py-2.5 text-xs font-bold text-white shadow"
+            className="apple-btn flex-1 flex items-center justify-center gap-1.5 rounded-full bg-emerald-600 py-2.5 text-xs font-bold text-white shadow"
           >
             <Share2 className="h-3.5 w-3.5" />
             <span>WhatsApp</span>
@@ -1127,7 +1170,7 @@ const Index = () => {
             type="button"
             onClick={exportAsPng}
             disabled={isExporting}
-            className="flex-1 flex items-center justify-center gap-1.5 rounded-xl bg-amber-500 py-2.5 text-xs font-bold text-slate-950 shadow"
+            className="apple-btn flex-1 flex items-center justify-center gap-1.5 rounded-full bg-amber-500 py-2.5 text-xs font-bold text-slate-950 shadow"
           >
             <Download className="h-3.5 w-3.5" />
             <span>Download</span>
@@ -1135,7 +1178,7 @@ const Index = () => {
           <button
             type="button"
             onClick={fireCelebrationConfetti}
-            className="flex items-center justify-center rounded-xl bg-slate-900 border border-white/20 p-2.5 text-amber-400 shadow"
+            className="apple-btn flex items-center justify-center rounded-full bg-slate-900 border border-white/20 p-2.5 text-amber-400 shadow"
             aria-label="Celebrate fireworks"
           >
             <Sparkles className="h-4 w-4" />

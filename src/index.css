@@ -23,13 +23,16 @@
     --border: 222 30% 22%;
     --input: 222 30% 22%;
     --ring: 28 100% 56%;
-    --radius: 1rem;
+    --radius: 1.25rem;
 
-    /* Patriotic Tokens */
+    /* Patriotic Color Tokens */
     --saffron: 28 100% 56%;
     --india-green: 151 93% 22%;
     --india-blue: 241 96% 28%;
     --gold: 46 65% 52%;
+
+    /* Apple Fluid Physics */
+    --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   * {
@@ -38,11 +41,75 @@
   }
 
   body {
-    @apply bg-[#070c18] text-slate-100 antialiased selection:bg-amber-500 selection:text-black;
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    @apply bg-[#050811] text-slate-100 antialiased selection:bg-amber-500 selection:text-black;
+    font-family: -apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', 'SF Pro Display', system-ui, sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
   }
+}
+
+/* ─── Apple Liquid Glass & Material System ─── */
+.apple-glass {
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(24px) saturate(180%) brightness(105%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%) brightness(105%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow:
+    0 16px 36px -10px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.apple-glass-pill {
+  background: rgba(15, 23, 42, 0.72);
+  backdrop-filter: blur(20px) saturate(175%) brightness(102%);
+  -webkit-backdrop-filter: blur(20px) saturate(175%) brightness(102%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 10px 25px -5px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  border-radius: 9999px;
+  transition: all 0.35s var(--ease-spring);
+}
+
+.apple-glass-pill:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow:
+    0 14px 30px -5px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.apple-glass-pill:active {
+  transform: scale(0.97);
+}
+
+/* Liquid Glass Specular Arc */
+.specular-highlight {
+  position: relative;
+  overflow: hidden;
+}
+
+.specular-highlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    ellipse 75% 40% at 50% 0%,
+    rgba(255, 255, 255, 0.28) 0%,
+    transparent 65%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Apple Fluid Button Press */
+.apple-btn {
+  transition: transform 0.2s var(--ease-spring), filter 0.2s var(--ease-spring), box-shadow 0.2s var(--ease-spring);
+}
+
+.apple-btn:active {
+  transform: scale(0.96);
 }
 
 /* Ambient Patriotic Aurora Mesh */
@@ -53,37 +120,37 @@
   z-index: 0;
   overflow: hidden;
   background:
-    radial-gradient(circle at 10% 15%, rgba(255, 103, 31, 0.18) 0%, transparent 45%),
-    radial-gradient(circle at 90% 85%, rgba(4, 106, 56, 0.20) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(6, 3, 141, 0.15) 0%, transparent 60%),
-    radial-gradient(circle at 85% 20%, rgba(212, 175, 55, 0.12) 0%, transparent 40%);
+    radial-gradient(ellipse 60% 50% at 15% 10%, rgba(255, 103, 31, 0.22) 0%, transparent 60%),
+    radial-gradient(ellipse 65% 55% at 85% 85%, rgba(4, 106, 56, 0.24) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 50% at 50% 50%, rgba(6, 3, 141, 0.18) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 35% at 80% 15%, rgba(212, 175, 55, 0.14) 0%, transparent 55%);
 }
 
 .aurora-orb {
   position: absolute;
   border-radius: 9999px;
-  filter: blur(60px);
-  opacity: 0.6;
+  filter: blur(70px);
+  opacity: 0.65;
   mix-blend-mode: screen;
   will-change: transform;
 }
 
 @keyframes float-orb-1 {
   0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(40px, -30px) scale(1.12); }
+  50% { transform: translate(45px, -35px) scale(1.15); }
 }
 
 @keyframes float-orb-2 {
   0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-30px, 35px) scale(1.15); }
+  50% { transform: translate(-35px, 40px) scale(1.18); }
 }
 
 .animate-orb-1 {
-  animation: float-orb-1 16s ease-in-out infinite alternate;
+  animation: float-orb-1 18s var(--ease-spring) infinite alternate;
 }
 
 .animate-orb-2 {
-  animation: float-orb-2 20s ease-in-out infinite alternate;
+  animation: float-orb-2 22s var(--ease-spring) infinite alternate;
 }
 
 /* Golden Shimmering Foil Accent */
@@ -103,99 +170,44 @@
   animation: shimmer-gold 6s linear infinite;
 }
 
-/* Tricolor Gradient Text */
-.tiranga-gradient-text {
-  background: linear-gradient(135deg, #ff7a18 0%, #ffffff 50%, #10b981 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* Glassmorphism Panels */
-.glass-panel {
-  background: rgba(15, 23, 42, 0.75);
+/* Apple Segmented Tab Track */
+.apple-segmented-track {
+  display: grid;
+  padding: 4px;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
   backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-.glass-panel-gold {
-  background: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(212, 175, 55, 0.35);
-  box-shadow:
-    0 20px 40px -15px rgba(0, 0, 0, 0.6),
-    0 0 25px -5px rgba(212, 175, 55, 0.15);
-}
-
-/* Regal Card Frame */
-.regal-card-frame {
   position: relative;
-  border-radius: 1.5rem;
-  padding: 2px;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 103, 31, 0.8) 0%,
-    rgba(255, 255, 255, 0.9) 35%,
-    rgba(212, 175, 55, 0.9) 50%,
-    rgba(255, 255, 255, 0.9) 65%,
-    rgba(4, 106, 56, 0.8) 100%
-  );
+}
+
+/* Apple Style Floating Island Header */
+.apple-floating-island {
+  background: rgba(10, 15, 28, 0.78);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   box-shadow:
-    0 25px 60px -15px rgba(0, 0, 0, 0.8),
-    0 0 40px -10px rgba(255, 103, 31, 0.25),
-    0 0 40px -10px rgba(4, 106, 56, 0.25);
+    0 12px 32px -8px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-/* Tricolor Ribbon Bar */
-.tricolor-ribbon {
-  height: 6px;
-  width: 100%;
-  background: linear-gradient(
-    90deg,
-    #FF671F 0%,
-    #FF671F 33.33%,
-    #FFFFFF 33.33%,
-    #FFFFFF 66.66%,
-    #046A38 66.66%,
-    #046A38 100%
-  );
-}
-
-/* Floating Sparkles */
-.sparkle-particle {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: #ffffff;
-  pointer-events: none;
-  animation: sparkle-rise linear infinite;
-  opacity: 0;
-}
-
-@keyframes sparkle-rise {
-  0% { transform: translateY(0) scale(0.5); opacity: 0; }
-  25% { opacity: 0.8; }
-  100% { transform: translateY(-100vh) scale(1.2); opacity: 0; }
-}
-
-/* Countdown Clock Tile */
-.clock-tile {
-  background: linear-gradient(180deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 0.875rem;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 8px 16px -4px rgba(0, 0, 0, 0.4);
-}
-
-/* Reduced Motion */
+/* Reduced Motion & Reduced Transparency Fallbacks */
 @media (prefers-reduced-motion: reduce) {
   .aurora-orb,
-  .sparkle-particle,
   .animate-orb-1,
   .animate-orb-2,
   .gold-shimmer-text {
     animation: none !important;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .apple-glass,
+  .apple-glass-pill,
+  .apple-floating-island {
+    background: #0d1322 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
 }

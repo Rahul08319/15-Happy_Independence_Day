@@ -145,12 +145,123 @@
   50% { transform: translate(-35px, 40px) scale(1.18); }
 }
 
+@keyframes float-orb-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, 35px) scale(1.22); }
+}
+
 .animate-orb-1 {
   animation: float-orb-1 18s var(--ease-spring) infinite alternate;
 }
 
 .animate-orb-2 {
   animation: float-orb-2 22s var(--ease-spring) infinite alternate;
+}
+
+.animate-orb-3 {
+  animation: float-orb-3 16s var(--ease-spring) infinite alternate;
+}
+
+/* Dynamic Animated Card Border Glow */
+@keyframes border-glow-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animated-card-border {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 103, 31, 0.95) 0%,
+    rgba(255, 255, 255, 0.95) 20%,
+    rgba(212, 175, 55, 0.9) 35%,
+    rgba(6, 3, 141, 0.85) 50%,
+    rgba(255, 255, 255, 0.95) 65%,
+    rgba(4, 106, 56, 0.95) 80%,
+    rgba(255, 103, 31, 0.95) 100%
+  );
+  background-size: 300% 300%;
+  animation: border-glow-flow 8s ease infinite;
+}
+
+/* Floating Physics Animation */
+@keyframes gentle-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-7px); }
+}
+
+.animate-float {
+  animation: gentle-float 4.5s ease-in-out infinite;
+}
+
+/* Medallion Golden & Azure Glow Pulse */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.25), 0 0 35px rgba(59, 130, 246, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.5), 0 0 55px rgba(59, 130, 246, 0.35);
+  }
+}
+
+.medallion-glow {
+  animation: pulse-glow 3.5s ease-in-out infinite;
+}
+
+/* Holographic Card Sweep */
+@keyframes holographic-sweep {
+  0% { transform: translateX(-150%) skewX(-25deg); opacity: 0; }
+  15% { opacity: 0.25; }
+  35% { transform: translateX(250%) skewX(-25deg); opacity: 0; }
+  100% { transform: translateX(250%) skewX(-25deg); opacity: 0; }
+}
+
+.holographic-card-sheen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 25%,
+    rgba(255, 215, 0, 0.25) 50%,
+    rgba(255, 255, 255, 0.15) 75%,
+    transparent 100%
+  );
+  pointer-events: none;
+  animation: holographic-sweep 8s ease-in-out infinite;
+  z-index: 15;
+}
+
+/* Equalizer Bouncing Bar Animation */
+@keyframes bento-equalizer {
+  0%, 100% { height: 6px; }
+  50% { height: 28px; }
+}
+
+.animate-bento-bar {
+  animation: bento-equalizer 1.2s ease-in-out infinite;
+}
+
+/* Animated Shimmer Ribbon */
+@keyframes shimmer-ribbon {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.tricolor-ribbon-animated {
+  background: linear-gradient(
+    90deg,
+    #FF671F 0%,
+    #FFFFFF 25%,
+    #046A38 50%,
+    #FF671F 75%,
+    #FFFFFF 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-ribbon 5s linear infinite;
 }
 
 /* Golden Shimmering Foil Accent */
@@ -167,7 +278,7 @@
   color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
-  animation: shimmer-gold 6s linear infinite;
+  animation: shimmer-gold 5s linear infinite;
 }
 
 /* Apple Segmented Tab Track */
@@ -197,6 +308,13 @@
   .aurora-orb,
   .animate-orb-1,
   .animate-orb-2,
+  .animate-orb-3,
+  .animated-card-border,
+  .animate-float,
+  .medallion-glow,
+  .holographic-card-sheen,
+  .animate-bento-bar,
+  .tricolor-ribbon-animated,
   .gold-shimmer-text {
     animation: none !important;
   }

@@ -181,11 +181,10 @@ const WishCard = ({
     <div
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative mx-auto rounded-[2.25rem] p-[2px] cursor-pointer select-none transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[0_30px_70px_-15px_rgba(0,0,0,0.9)]"
+      className="relative mx-auto rounded-[2.25rem] p-[2.5px] cursor-pointer select-none transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[0_30px_70px_-15px_rgba(0,0,0,0.9)] animated-card-border"
       style={{
         maxWidth: compact ? 340 : 480,
         transform: compact ? "none" : `perspective(1000px) rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`,
-        background: `linear-gradient(135deg, rgba(255,103,31,0.9) 0%, rgba(255,255,255,0.95) 35%, rgba(212,175,55,0.9) 50%, rgba(255,255,255,0.95) 65%, rgba(4,106,56,0.9) 100%)`,
       }}
     >
       <div
@@ -193,6 +192,9 @@ const WishCard = ({
         className="relative rounded-[2.15rem] px-7 py-8 text-center overflow-hidden backdrop-blur-2xl border border-white/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.4)]"
         style={{ background: themeStyles.bg }}
       >
+        {/* Holographic light sweep across the card */}
+        <div className="holographic-card-sheen rounded-[2.15rem]" />
+
         {/* Apple Liquid Glass Specular Arc */}
         <div
           className="pointer-events-none absolute inset-0 z-20 transition-opacity duration-300 rounded-[2.15rem]"
@@ -201,11 +203,11 @@ const WishCard = ({
           }}
         />
 
-        {/* Watermark Ashoka Chakra Background */}
-        <div className="pointer-events-none absolute -right-14 -top-14 opacity-[0.05] select-none">
+        {/* Counter-Rotating Watermark Ashoka Chakra Backgrounds */}
+        <div className="pointer-events-none absolute -right-14 -top-14 opacity-[0.06] select-none animate-[spin_90s_linear_infinite]">
           <AshokaChakra size={280} animate={false} color="#ffffff" />
         </div>
-        <div className="pointer-events-none absolute -left-14 -bottom-14 opacity-[0.05] select-none">
+        <div className="pointer-events-none absolute -left-14 -bottom-14 opacity-[0.06] select-none animate-[spin_90s_linear_infinite_reverse]">
           <AshokaChakra size={280} animate={false} color="#ffffff" />
         </div>
 
@@ -224,18 +226,18 @@ const WishCard = ({
 
         {/* Dedicated Recipient Banner */}
         {recipientName && (
-          <div className="relative z-10 mt-4 inline-block">
+          <div className="relative z-10 mt-4 inline-block animate-float">
             <span className="text-[11px] font-medium tracking-wide text-amber-200/90 uppercase px-4 py-1 rounded-full bg-amber-400/10 border border-amber-400/25 shadow-sm">
               Dedicated to: <strong className="font-bold text-white">{recipientName}</strong>
             </span>
           </div>
         )}
 
-        {/* Center Ashoka Chakra Medallion */}
+        {/* Center Ashoka Chakra Medallion with Floating Glow Physics */}
         <div className="relative z-10 my-6 flex justify-center">
           <div className="relative flex items-center justify-center">
-            <div className="absolute h-28 w-28 rounded-full bg-amber-400/15 blur-2xl pointer-events-none" />
-            <div className="relative rounded-full p-3 bg-slate-950/80 border border-amber-400/40 shadow-[0_0_25px_rgba(212,175,55,0.25)]">
+            <div className="absolute h-28 w-28 rounded-full bg-amber-400/20 blur-2xl pointer-events-none animate-pulse" />
+            <div className="relative rounded-full p-3 bg-slate-950/80 border border-amber-400/50 medallion-glow animate-float">
               <AshokaChakra size={compact ? 54 : 70} color="#3b82f6" animate={true} />
             </div>
           </div>
@@ -249,8 +251,8 @@ const WishCard = ({
           {title}
         </h2>
 
-        {/* Tricolor Ribbon Accent */}
-        <div className="my-3.5 mx-auto h-[3px] w-36 rounded-full bg-gradient-to-r from-[#FF671F] via-[#FFFFFF] to-[#046A38] opacity-90 shadow" />
+        {/* Animated Tricolor Ribbon Accent */}
+        <div className="my-3.5 mx-auto h-[3.5px] w-40 rounded-full tricolor-ribbon-animated opacity-95 shadow" />
 
         {/* Countdown Tiles with Apple Glass Polish */}
         <div className="relative z-10 my-5">
@@ -606,7 +608,7 @@ const Index = () => {
           }}
         />
         <div
-          className="aurora-orb"
+          className="aurora-orb animate-orb-3"
           style={{
             width: 380,
             height: 380,
@@ -672,7 +674,7 @@ const Index = () => {
       <main className="container mx-auto px-4 pt-28 pb-16 relative z-10">
         {/* Banner Hero with Apple Typography & Tight Tracking */}
         <div className="text-center max-w-2xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-2 rounded-full border border-amber-400/30 bg-amber-400/10 px-4 py-1 text-xs font-semibold text-amber-300 backdrop-blur-xl mb-3 shadow-inner">
+          <div className="inline-flex items-center gap-2 rounded-full border border-amber-400/30 bg-amber-400/10 px-4 py-1 text-xs font-semibold text-amber-300 backdrop-blur-xl mb-3 shadow-inner animate-float">
             <Flag className="h-3.5 w-3.5 text-amber-400" />
             <span>{autoInfo.heroBadgeText}</span>
           </div>
@@ -1111,15 +1113,37 @@ const Index = () => {
               <span className="text-xs font-semibold tracking-widest uppercase text-amber-300/80">Glass</span>
             </div>
 
-            {/* Tile 2 — Audio (wide) */}
+            {/* Tile 2 — Audio (wide) with Live Equalizer Animation */}
             <div className="apple-glass rounded-3xl p-6 flex flex-col items-center justify-center gap-3 relative overflow-hidden transition-all hover:scale-[1.02] col-span-2" style={{background:"linear-gradient(135deg,rgba(59,130,246,0.08),rgba(29,78,216,0.04))"}}>
               <div className="absolute top-0 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-blue-400/40 to-transparent" />
+              {/* Dynamic live equalizer bars with staggered spring bounce */}
               <div className="flex items-end gap-[3px] h-10">
-                {[5,9,14,9,18,12,7,20,11,16,8,13,6].map((h,i) => (
-                  <div key={i} className="w-1 rounded-full bg-blue-400/70" style={{height:`${h}px`}} />
+                {[
+                  { delay: "0s", dur: "0.85s" },
+                  { delay: "0.2s", dur: "1.15s" },
+                  { delay: "0.4s", dur: "0.75s" },
+                  { delay: "0.1s", dur: "1.3s" },
+                  { delay: "0.5s", dur: "0.95s" },
+                  { delay: "0.3s", dur: "1.2s" },
+                  { delay: "0.6s", dur: "0.9s" },
+                  { delay: "0.15s", dur: "1.1s" },
+                  { delay: "0.45s", dur: "0.8s" },
+                  { delay: "0.25s", dur: "1.25s" },
+                  { delay: "0.55s", dur: "0.9s" },
+                  { delay: "0.35s", dur: "1.05s" },
+                  { delay: "0.05s", dur: "1.18s" },
+                ].map((item, i) => (
+                  <div
+                    key={i}
+                    className="w-1 rounded-full bg-blue-400/80 animate-bento-bar"
+                    style={{
+                      animationDelay: item.delay,
+                      animationDuration: item.dur,
+                    }}
+                  />
                 ))}
               </div>
-              <div className="h-10 w-10 rounded-2xl bg-blue-500/20 border border-blue-400/20 flex items-center justify-center text-blue-300">
+              <div className="h-10 w-10 rounded-2xl bg-blue-500/20 border border-blue-400/20 flex items-center justify-center text-blue-300 shadow-sm">
                 <Music className="h-5 w-5" />
               </div>
               <span className="text-xs font-semibold tracking-widest uppercase text-blue-300/80">Audio</span>
@@ -1134,18 +1158,18 @@ const Index = () => {
               <span className="text-xs font-semibold tracking-widest uppercase text-emerald-300/80">Share</span>
             </div>
 
-            {/* Tile 4 — Tricolour stripe (wide) */}
+            {/* Tile 4 — Tricolour stripe (wide) with Smooth Rotating Chakra */}
             <div className="apple-glass rounded-3xl p-6 flex items-center justify-center gap-6 col-span-2 relative overflow-hidden transition-all hover:scale-[1.01]" style={{background:"linear-gradient(135deg,rgba(255,153,0,0.06),rgba(19,136,8,0.06))"}}>
               <div className="absolute top-0 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
               <div className="flex flex-col gap-1">
-                <div className="h-2.5 w-24 rounded-full bg-[#FF9933]/70" />
-                <div className="h-2.5 w-24 rounded-full bg-white/40" />
-                <div className="h-2.5 w-24 rounded-full bg-[#138808]/70" />
+                <div className="h-2.5 w-24 rounded-full bg-[#FF9933]/70 shadow-[0_0_8px_rgba(255,153,0,0.3)]" />
+                <div className="h-2.5 w-24 rounded-full bg-white/50 shadow-[0_0_8px_rgba(255,255,255,0.2)]" />
+                <div className="h-2.5 w-24 rounded-full bg-[#138808]/70 shadow-[0_0_8px_rgba(19,136,8,0.3)]" />
               </div>
-              <div className="h-12 w-12 rounded-full border-2 border-[#000080]/60 flex items-center justify-center">
+              <div className="h-12 w-12 rounded-full border-2 border-[#000080]/60 flex items-center justify-center animate-[spin_25s_linear_infinite] shadow-[0_0_12px_rgba(0,0,128,0.25)]">
                 <div className="h-8 w-8 rounded-full border-2 border-[#000080]/40" />
               </div>
-              <span className="text-xs font-semibold tracking-widest uppercase text-white/40">Tricolour</span>
+              <span className="text-xs font-semibold tracking-widest uppercase text-white/50">Tricolour</span>
             </div>
 
             {/* Tile 5 — Export */}

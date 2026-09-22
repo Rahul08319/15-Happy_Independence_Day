@@ -27,6 +27,8 @@ import AshokaChakra from "@/components/AshokaChakra";
 import MusicPlayer from "@/components/MusicPlayer";
 import QRCodeModal from "@/components/QRCodeModal";
 import CelebrationCanvas from "@/components/CelebrationCanvas";
+import FloatingKites from "@/components/FloatingKites";
+import IndependenceHistorySection from "@/components/IndependenceHistorySection";
 import { PATRIOTIC_QUOTES } from "@/components/patrioticQuotes";
 import { getIndependenceDayInfo } from "@/lib/independenceDay";
 import vandemataram from "@/assets/vandemataram.mp3";
@@ -585,6 +587,9 @@ const Index = () => {
       {/* Dynamic Celebration Embers & Floating Lights Canvas */}
       <CelebrationCanvas />
 
+      {/* Canva-Inspired Celebratory Flying Kites (Patang) */}
+      <FloatingKites />
+
       {/* Ambient Patriotic Aurora Mesh */}
       <div className="patriotic-aurora" aria-hidden="true">
         <div
@@ -634,7 +639,7 @@ const Index = () => {
             </div>
             <div className="hidden sm:block">
               <div className="flex items-center gap-1.5">
-                <span className="text-xs font-black tracking-tight text-white">Pixel Perfect</span>
+                <span className="text-xs font-black tracking-tight text-white">Happy Independence Day</span>
                 <span className="rounded-full bg-amber-500/20 px-2 py-0.5 text-[9px] font-bold text-amber-300 border border-amber-500/30">
                   {autoInfo.targetYear}
                 </span>
@@ -1190,6 +1195,9 @@ const Index = () => {
 
           </div>
         </div>
+
+        {/* Wikipedia Historical Knowledge & National Traditions Section */}
+        <IndependenceHistorySection />
       </main>
 
       {/* Floating Bottom Bar for Mobile Convenience */}

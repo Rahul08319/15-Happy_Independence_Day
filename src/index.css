@@ -303,12 +303,55 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
+/* Canva-Inspired Floating Kites (Patang) Animations */
+@keyframes kite-soar-1 {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px) rotate(-14deg);
+  }
+  50% {
+    transform: translateY(-22px) translateX(12px) rotate(-6deg);
+  }
+}
+
+@keyframes kite-soar-2 {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px) rotate(18deg);
+  }
+  50% {
+    transform: translateY(-26px) translateX(-14px) rotate(10deg);
+  }
+}
+
+@keyframes kite-soar-3 {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px) rotate(8deg);
+  }
+  50% {
+    transform: translateY(-18px) translateX(10px) rotate(16deg);
+  }
+}
+
+.animate-kite-1 {
+  animation: kite-soar-1 6.5s ease-in-out infinite;
+}
+
+.animate-kite-2 {
+  animation: kite-soar-2 8s ease-in-out infinite;
+}
+
+.animate-kite-3 {
+  animation: kite-soar-3 7s ease-in-out infinite;
+}
+
 /* Reduced Motion & Reduced Transparency Fallbacks */
 @media (prefers-reduced-motion: reduce) {
   .aurora-orb,
   .animate-orb-1,
   .animate-orb-2,
   .animate-orb-3,
+  .animate-kite-1,
+  .animate-kite-2,
+  .animate-kite-3,
   .animated-card-border,
   .animate-float,
   .medallion-glow,

@@ -4,7 +4,7 @@
 
 <br/>
 
-# 🇮🇳 Pixel Perfect
+# 🇮🇳 Happy Independence Day
 ### Regal Indian Independence Day Greeting & Celebration Studio
 
 [![GitHub Repo stars](https://img.shields.io/badge/Stars-Show_Love-FF671F?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Rahul08319/pixel-perfect/stargazers)
@@ -104,12 +104,12 @@
       <p>Pre-populated WhatsApp sharing with festive emoji templates, URL query parameter generation, and on-screen QR Code modal for instant mobile scanning.</p>
   <tr>
     <td width="50%">
-      <h3 align="left">🔄 Automatic Annual Rollover</h3>
-      <p>Self-updating milestone logic that dynamically computes the exact edition of Independence Day (e.g. 80th, 81st, 100th Centenary), years of freedom completed since 1947, and automatically rolls forward to August 15th of the coming year with zero manual code updates.</p>
+      <h3 align="left">📚 Wikipedia Historical Chronicles</h3>
+      <p>Interactive freedom timeline and verified trivia sourced from <a href="https://en.wikipedia.org/wiki/Independence_Day_(India)">Wikipedia</a>: Purna Swaraj (1929), Indian Independence Act (1947), Nehru's <i>Tryst with Destiny</i>, Red Fort Lahori Gate flag hoisting, and national ceremonies.</p>
     </td>
     <td width="50%">
-      <h3 align="left">🎆 Pyrotechnic Confetti &amp; Embers</h3>
-      <p>Multi-directional tricolor celebratory fireworks bursts powered by <code>canvas-confetti</code> alongside ambient floating HTML5 particle embers with reduced-motion accessibility support.</p>
+      <h3 align="left">🪁 Canva-Inspired Kite Flying &amp; Red Fort</h3>
+      <p>Copyright-free SVG vector fighter kites (<i>Patang</i>) soaring across the ambient sky, accompanied by a glowing architectural vector silhouette of Delhi's Red Fort ramparts.</p>
     </td>
   </tr>
 </table>

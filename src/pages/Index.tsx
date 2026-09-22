@@ -35,23 +35,96 @@ import vandemataram from "@/assets/vandemataram.mp3";
 
 const TRICOLORS = ["#FF671F", "#FFFFFF", "#046A38", "#06038D", "#D4AF37"];
 
+const playCelebrationChime = () => {
+  if (typeof window === "undefined") return;
+  try {
+    const AudioContextClass =
+      window.AudioContext ||
+      (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+    if (!AudioContextClass) return;
+    const ctx = new AudioContextClass();
+    const now = ctx.currentTime;
+    // Patriotic fanfare sequence: C5, E5, G5, C6 arpeggio
+    const notes = [523.25, 659.25, 783.99, 1046.5];
+    notes.forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(freq, now + idx * 0.09);
+      gain.gain.setValueAtTime(0.2, now + idx * 0.09);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.09 + 0.32);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now + idx * 0.09);
+      osc.stop(now + idx * 0.09 + 0.34);
+    });
+  } catch {
+    // AudioContext may be restricted before gesture
+  }
+};
+
 const fireCelebrationConfetti = () => {
   if (typeof window === "undefined") return;
-  if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
 
-  const defaults = { colors: TRICOLORS, zIndex: 9999, disableForReducedMotion: true };
-  confetti({ ...defaults, particleCount: 70, spread: 70, origin: { x: 0.15, y: 0.8 }, angle: 55 });
-  confetti({ ...defaults, particleCount: 70, spread: 70, origin: { x: 0.85, y: 0.8 }, angle: 125 });
+  playCelebrationChime();
 
-  setTimeout(() => {
+  try {
+    const defaults = {
+      colors: TRICOLORS,
+      zIndex: 999999,
+      disableForReducedMotion: false,
+    };
+
+    // Left cannon
     confetti({
       ...defaults,
-      particleCount: 130,
-      spread: 120,
-      startVelocity: 50,
-      origin: { x: 0.5, y: 0.55 },
+      particleCount: 85,
+      spread: 80,
+      origin: { x: 0.1, y: 0.8 },
+      angle: 55,
+      scalar: 1.1,
     });
-  }, 220);
+
+    // Right cannon
+    confetti({
+      ...defaults,
+      particleCount: 85,
+      spread: 80,
+      origin: { x: 0.9, y: 0.8 },
+      angle: 125,
+      scalar: 1.1,
+    });
+
+    // Center star burst
+    setTimeout(() => {
+      try {
+        confetti({
+          ...defaults,
+          particleCount: 150,
+          spread: 120,
+          startVelocity: 55,
+          origin: { x: 0.5, y: 0.45 },
+          scalar: 1.25,
+        });
+      } catch {}
+    }, 200);
+
+    // Falling confetti shower
+    setTimeout(() => {
+      try {
+        confetti({
+          ...defaults,
+          particleCount: 90,
+          spread: 90,
+          startVelocity: 35,
+          origin: { x: 0.5, y: 0.2 },
+          ticks: 300,
+        });
+      } catch {}
+    }, 450);
+  } catch (err) {
+    console.warn("Celebration confetti:", err);
+  }
 };
 
 type CardTheme = "midnight" | "saffron" | "tiranga" | "emerald";
@@ -432,6 +505,27 @@ const Index = () => {
     }
   };
 
+  const [isCelebrating, setIsCelebrating] = useState(false);
+
+  const handleCelebrateClick = () => {
+    setIsCelebrating(true);
+    fireCelebrationConfetti();
+
+    toast({
+      title: "🇮🇳 Happy Independence Day! Jai Hind!",
+      description: "Celebrations initiated with fireworks and patriotic music!",
+    });
+
+    if (!isPlaying && audioRef.current) {
+      audioRef.current
+        .play()
+        .then(() => setIsPlaying(true))
+        .catch(() => {});
+    }
+
+    setTimeout(() => setIsCelebrating(false), 2200);
+  };
+
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -664,12 +758,18 @@ const Index = () => {
 
             <button
               type="button"
-              onClick={fireCelebrationConfetti}
-              className="apple-btn flex items-center gap-1.5 rounded-full bg-gradient-to-r from-amber-500 to-emerald-500 px-3.5 py-1.5 text-xs font-bold text-slate-950 shadow-md transition active:scale-95"
+              onClick={handleCelebrateClick}
+              className={`apple-btn flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-bold text-slate-950 shadow-md transition-all active:scale-95 ${
+                isCelebrating
+                  ? "bg-gradient-to-r from-amber-400 via-white to-emerald-400 ring-2 ring-amber-300 scale-105"
+                  : "bg-gradient-to-r from-amber-500 to-emerald-500 hover:brightness-110"
+              }`}
               aria-label="Launch celebratory fireworks confetti"
             >
-              <Sparkles className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">Celebrate</span>
+              <Sparkles className={`h-3.5 w-3.5 ${isCelebrating ? "animate-spin text-amber-900" : ""}`} />
+              <span className="hidden sm:inline">
+                {isCelebrating ? "Celebrating! 🇮🇳" : "Celebrate"}
+              </span>
             </button>
           </div>
         </div>
@@ -1225,11 +1325,15 @@ const Index = () => {
           </button>
           <button
             type="button"
-            onClick={fireCelebrationConfetti}
-            className="apple-btn flex items-center justify-center rounded-full bg-slate-900 border border-white/20 p-2.5 text-amber-400 shadow"
+            onClick={handleCelebrateClick}
+            className={`apple-btn flex items-center justify-center rounded-full border p-2.5 shadow transition-all ${
+              isCelebrating
+                ? "bg-amber-400 border-amber-300 text-slate-950 scale-110"
+                : "bg-slate-900 border-white/20 text-amber-400"
+            }`}
             aria-label="Celebrate fireworks"
           >
-            <Sparkles className="h-4 w-4" />
+            <Sparkles className={`h-4 w-4 ${isCelebrating ? "animate-spin" : ""}`} />
           </button>
         </div>
       </div>

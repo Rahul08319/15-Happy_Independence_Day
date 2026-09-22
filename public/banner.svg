@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050a16" />
+      <stop offset="50%" stop-color="#0b152d" />
+      <stop offset="100%" stop-color="#071b12" />
+    </linearGradient>
+
+    <!-- Tricolor Ribbon Gradient -->
+    <linearGradient id="tricolorRibbon" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FF671F" />
+      <stop offset="33.3%" stop-color="#FF671F" />
+      <stop offset="33.3%" stop-color="#FFFFFF" />
+      <stop offset="66.6%" stop-color="#FFFFFF" />
+      <stop offset="66.6%" stop-color="#046A38" />
+      <stop offset="100%" stop-color="#046A38" />
+    </linearGradient>
+
+    <!-- Golden Shimmer Gradient -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F5E084" />
+      <stop offset="30%" stop-color="#D4AF37" />
+      <stop offset="50%" stop-color="#FFF4D0" />
+      <stop offset="70%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#F5E084" />
+    </linearGradient>
+
+    <!-- Saffron Glow -->
+    <radialGradient id="saffronGlow" cx="20%" cy="30%" r="50%">
+      <stop offset="0%" stop-color="#FF671F" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#FF671F" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Green Glow -->
+    <radialGradient id="greenGlow" cx="80%" cy="70%" r="50%">
+      <stop offset="0%" stop-color="#046A38" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#046A38" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Center Chakra Glow -->
+    <radialGradient id="chakraHalo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#3B82F6" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="1200" height="400" fill="url(#bgGrad)" />
+
+  <!-- Ambient Light Orbs -->
+  <circle cx="240" cy="120" r="280" fill="url(#saffronGlow)" />
+  <circle cx="960" cy="280" r="280" fill="url(#greenGlow)" />
+  <circle cx="600" cy="170" r="180" fill="url(#chakraHalo)" />
+
+  <!-- Top Tricolor Border -->
+  <rect x="0" y="0" width="1200" height="6" fill="url(#tricolorRibbon)" />
+
+  <!-- Watermark Ashoka Chakra Background -->
+  <g transform="translate(600, 160) scale(1.4)" opacity="0.08">
+    <circle cx="0" cy="0" r="100" fill="none" stroke="#FFFFFF" stroke-width="4" />
+    <!-- 24 Spokes -->
+    <g stroke="#FFFFFF" stroke-width="2">
+      <line x1="0" y1="0" x2="0" y2="-100" />
+      <line x1="0" y1="0" x2="25.88" y2="-96.59" />
+      <line x1="0" y1="0" x2="50" y2="-86.60" />
+      <line x1="0" y1="0" x2="70.71" y2="-70.71" />
+      <line x1="0" y1="0" x2="86.60" y2="-50" />
+      <line x1="0" y1="0" x2="96.59" y2="-25.88" />
+      <line x1="0" y1="0" x2="100" y2="0" />
+      <line x1="0" y1="0" x2="96.59" y2="25.88" />
+      <line x1="0" y1="0" x2="86.60" y2="50" />
+      <line x1="0" y1="0" x2="70.71" y2="70.71" />
+      <line x1="0" y1="0" x2="50" y2="86.60" />
+      <line x1="0" y1="0" x2="25.88" y2="96.59" />
+      <line x1="0" y1="0" x2="0" y2="100" />
+      <line x1="0" y1="0" x2="-25.88" y2="96.59" />
+      <line x1="0" y1="0" x2="-50" y2="86.60" />
+      <line x1="0" y1="0" x2="-70.71" y2="70.71" />
+      <line x1="0" y1="0" x2="-86.60" y2="50" />
+      <line x1="0" y1="0" x2="-96.59" y2="25.88" />
+      <line x1="0" y1="0" x2="-100" y2="0" />
+      <line x1="0" y1="0" x2="-96.59" y2="-25.88" />
+      <line x1="0" y1="0" x2="-86.60" y2="-50" />
+      <line x1="0" y1="0" x2="-70.71" y2="-70.71" />
+      <line x1="0" y1="0" x2="-50" y2="-86.60" />
+      <line x1="0" y1="0" x2="-25.88" y2="-96.59" />
+    </g>
+  </g>
+
+  <!-- Celebratory Badge -->
+  <g transform="translate(600, 75)">
+    <rect x="-140" y="-16" width="280" height="32" rx="16" fill="rgba(212, 175, 55, 0.12)" stroke="rgba(212, 175, 55, 0.4)" stroke-width="1" />
+    <text x="0" y="5" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="12" font-weight="700" fill="#F5E084" text-anchor="middle" letter-spacing="2">
+      ★ AZADI KA AMRIT MAHOTSAV ★
+    </text>
+  </g>
+
+  <!-- Main Title -->
+  <text x="600" y="165" font-family="'Cinzel', 'Playfair Display', Georgia, serif" font-size="52" font-weight="900" fill="url(#goldGrad)" text-anchor="middle" letter-spacing="4">
+    PIXEL PERFECT
+  </text>
+
+  <!-- Subtitle with Tricolor Accents -->
+  <text x="600" y="215" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="20" font-weight="600" fill="#E2E8F0" text-anchor="middle" letter-spacing="1">
+    Regal Indian Independence Day Celebration Studio
+  </text>
+
+  <!-- Feature Pills -->
+  <g transform="translate(600, 275)">
+    <!-- Pill 1: Live Countdown -->
+    <g transform="translate(-310, 0)">
+      <rect x="-85" y="-16" width="170" height="32" rx="16" fill="rgba(255, 103, 31, 0.15)" stroke="rgba(255, 103, 31, 0.3)" stroke-width="1" />
+      <text x="0" y="5" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#FFB088" text-anchor="middle">
+        ⏱ Freedom Countdown
+      </text>
+    </g>
+
+    <!-- Pill 2: Vande Mataram -->
+    <g transform="translate(-100, 0)">
+      <rect x="-95" y="-16" width="190" height="32" rx="16" fill="rgba(59, 130, 246, 0.15)" stroke="rgba(59, 130, 246, 0.3)" stroke-width="1" />
+      <text x="0" y="5" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#93C5FD" text-anchor="middle">
+        🎵 Vande Mataram Music
+      </text>
+    </g>
+
+    <!-- Pill 3: 4 Themes -->
+    <g transform="translate(105, 0)">
+      <rect x="-85" y="-16" width="170" height="32" rx="16" fill="rgba(212, 175, 55, 0.15)" stroke="rgba(212, 175, 55, 0.3)" stroke-width="1" />
+      <text x="0" y="5" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#FDE68A" text-anchor="middle">
+        🎨 4 Aesthetic Themes
+      </text>
+    </g>
+
+    <!-- Pill 4: High Res Export -->
+    <g transform="translate(310, 0)">
+      <rect x="-90" y="-16" width="180" height="32" rx="16" fill="rgba(4, 106, 56, 0.15)" stroke="rgba(4, 106, 56, 0.3)" stroke-width="1" />
+      <text x="0" y="5" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#86EFAC" text-anchor="middle">
+        🖼️ 2X PNG &amp; PDF Export
+      </text>
+    </g>
+  </g>
+
+  <!-- Bottom Tricolor Border -->
+  <rect x="0" y="394" width="1200" height="6" fill="url(#tricolorRibbon)" />
+</svg>

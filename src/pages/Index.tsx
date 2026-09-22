@@ -689,7 +689,7 @@ const Index = () => {
             Personalized <span className="gold-shimmer-text font-serif">Patriotic Greetings</span>
           </h1>
           <p className="mt-3 text-sm sm:text-base text-slate-400 max-w-xl mx-auto font-medium leading-relaxed">
-            Interact with the 3D Liquid Glass card. Customize typography, dedications, and themes. Automatically rolling forward for {autoInfo.targetYear} and beyond.
+            Celebrate India's independence with a personalised card for {autoInfo.targetYear}.
           </p>
         </div>
 
@@ -1098,56 +1098,72 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Apple Style Bento Grid Showcase */}
-        <div className="mt-20 max-w-6xl mx-auto">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-white font-sans">
-              Engineered with <span className="gold-shimmer-text font-serif">Apple Design Precision</span>
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-400 mt-1">
-              Fluid spring physics, continuous curvature, and Liquid Glass materials.
-            </p>
-          </div>
+        {/* Visual Feature Bento */}
+        <div className="mt-24 max-w-6xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* Bento Box 1: Fluid Physics */}
-            <div className="apple-glass rounded-3xl p-6 relative overflow-hidden transition-transform hover:scale-[1.01]">
-              <div className="h-10 w-10 rounded-2xl bg-amber-500/20 border border-amber-400/30 flex items-center justify-center text-amber-300 mb-4 shadow-sm">
-                <Layers className="h-5 w-5" />
+            {/* Tile 1 — Glass */}
+            <div className="apple-glass rounded-3xl p-6 flex flex-col items-center justify-center gap-3 aspect-square relative overflow-hidden transition-all hover:scale-[1.02]" style={{background:"linear-gradient(135deg,rgba(251,191,36,0.08),rgba(180,83,9,0.04))"}}>
+              <div className="absolute top-0 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-amber-400/40 to-transparent" />
+              <div className="h-14 w-14 rounded-2xl bg-amber-500/20 border border-amber-400/20 flex items-center justify-center text-amber-300 shadow-lg">
+                <Layers className="h-6 w-6" />
               </div>
-              <h3 className="text-base font-bold text-white tracking-tight mb-1">
-                Liquid Glass &amp; 3D Sheen
-              </h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Optical depth simulating physical curved glass with interactive specular foil reflection that tracks your cursor.
-              </p>
+              <span className="text-xs font-semibold tracking-widest uppercase text-amber-300/80">Glass</span>
             </div>
 
-            {/* Bento Box 2: Lossless Audio */}
-            <div className="apple-glass rounded-3xl p-6 relative overflow-hidden transition-transform hover:scale-[1.01]">
-              <div className="h-10 w-10 rounded-2xl bg-blue-500/20 border border-blue-400/30 flex items-center justify-center text-blue-300 mb-4 shadow-sm">
+            {/* Tile 2 — Audio (wide) */}
+            <div className="apple-glass rounded-3xl p-6 flex flex-col items-center justify-center gap-3 relative overflow-hidden transition-all hover:scale-[1.02] col-span-2" style={{background:"linear-gradient(135deg,rgba(59,130,246,0.08),rgba(29,78,216,0.04))"}}>
+              <div className="absolute top-0 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-blue-400/40 to-transparent" />
+              <div className="flex items-end gap-[3px] h-10">
+                {[5,9,14,9,18,12,7,20,11,16,8,13,6].map((h,i) => (
+                  <div key={i} className="w-1 rounded-full bg-blue-400/70" style={{height:`${h}px`}} />
+                ))}
+              </div>
+              <div className="h-10 w-10 rounded-2xl bg-blue-500/20 border border-blue-400/20 flex items-center justify-center text-blue-300">
                 <Music className="h-5 w-5" />
               </div>
-              <h3 className="text-base font-bold text-white tracking-tight mb-1">
-                Spatial Vande Mataram Audio
-              </h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Embedded instrumental score with real-time waveform visualizer frequency bars, volume slider, and instant keyboard shortcuts.
-              </p>
+              <span className="text-xs font-semibold tracking-widest uppercase text-blue-300/80">Audio</span>
             </div>
 
-            {/* Bento Box 3: AirDrop & QR Sharing */}
-            <div className="apple-glass rounded-3xl p-6 relative overflow-hidden transition-transform hover:scale-[1.01]">
-              <div className="h-10 w-10 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-300 mb-4 shadow-sm">
-                <Smartphone className="h-5 w-5" />
+            {/* Tile 3 — Share */}
+            <div className="apple-glass rounded-3xl p-6 flex flex-col items-center justify-center gap-3 aspect-square relative overflow-hidden transition-all hover:scale-[1.02]" style={{background:"linear-gradient(135deg,rgba(16,185,129,0.08),rgba(6,95,70,0.04))"}}>
+              <div className="absolute top-0 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent" />
+              <div className="h-14 w-14 rounded-2xl bg-emerald-500/20 border border-emerald-400/20 flex items-center justify-center text-emerald-300 shadow-lg">
+                <Smartphone className="h-6 w-6" />
               </div>
-              <h3 className="text-base font-bold text-white tracking-tight mb-1">
-                AirDrop-Style QR &amp; WhatsApp
-              </h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Scan with any iPhone or Android camera to immediately open and share your personalized card on WhatsApp and social stories.
-              </p>
+              <span className="text-xs font-semibold tracking-widest uppercase text-emerald-300/80">Share</span>
             </div>
+
+            {/* Tile 4 — Tricolour stripe (wide) */}
+            <div className="apple-glass rounded-3xl p-6 flex items-center justify-center gap-6 col-span-2 relative overflow-hidden transition-all hover:scale-[1.01]" style={{background:"linear-gradient(135deg,rgba(255,153,0,0.06),rgba(19,136,8,0.06))"}}>
+              <div className="absolute top-0 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+              <div className="flex flex-col gap-1">
+                <div className="h-2.5 w-24 rounded-full bg-[#FF9933]/70" />
+                <div className="h-2.5 w-24 rounded-full bg-white/40" />
+                <div className="h-2.5 w-24 rounded-full bg-[#138808]/70" />
+              </div>
+              <div className="h-12 w-12 rounded-full border-2 border-[#000080]/60 flex items-center justify-center">
+                <div className="h-8 w-8 rounded-full border-2 border-[#000080]/40" />
+              </div>
+              <span className="text-xs font-semibold tracking-widest uppercase text-white/40">Tricolour</span>
+            </div>
+
+            {/* Tile 5 — Export */}
+            <div className="apple-glass rounded-3xl p-6 flex flex-col items-center justify-center gap-3 aspect-square relative overflow-hidden transition-all hover:scale-[1.02]" style={{background:"linear-gradient(135deg,rgba(139,92,246,0.08),rgba(76,29,149,0.04))"}}>
+              <div className="absolute top-0 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-violet-400/40 to-transparent" />
+              <div className="h-14 w-14 rounded-2xl bg-violet-500/20 border border-violet-400/20 flex items-center justify-center text-violet-300 shadow-lg">
+                <Download className="h-6 w-6" />
+              </div>
+              <span className="text-xs font-semibold tracking-widest uppercase text-violet-300/80">Export</span>
+            </div>
+
+            {/* Tile 6 — Year badge */}
+            <div className="apple-glass rounded-3xl p-6 flex flex-col items-center justify-center gap-2 aspect-square relative overflow-hidden transition-all hover:scale-[1.02]" style={{background:"linear-gradient(135deg,rgba(244,63,94,0.06),rgba(159,18,57,0.04))"}}>
+              <div className="absolute top-0 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-rose-400/40 to-transparent" />
+              <span className="text-4xl font-black tracking-tight text-rose-300/80 leading-none">{autoInfo.targetYear}</span>
+              <span className="text-xs font-semibold tracking-widest uppercase text-rose-300/50">Edition</span>
+            </div>
+
           </div>
         </div>
       </main>

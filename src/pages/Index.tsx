@@ -24,6 +24,7 @@ import MusicPlayer from "@/components/MusicPlayer";
 import QRCodeModal from "@/components/QRCodeModal";
 import CelebrationCanvas from "@/components/CelebrationCanvas";
 import { PATRIOTIC_QUOTES } from "@/components/patrioticQuotes";
+import { getIndependenceDayInfo } from "@/lib/independenceDay";
 import vandemataram from "@/assets/vandemataram.mp3";
 
 const TRICOLORS = ["#FF671F", "#FFFFFF", "#046A38", "#06038D", "#D4AF37"];
@@ -46,16 +47,6 @@ const fireCelebrationConfetti = () => {
     });
   }, 220);
 };
-
-const getNextIndependenceDay = (): string => {
-  const now = new Date();
-  const year = now.getFullYear();
-  const thisYear = new Date(`${year}-08-15T00:00:00`);
-  const targetYear = now < thisYear ? year : year + 1;
-  return `${targetYear}-08-15T00:00:00`;
-};
-
-const DEFAULT_TARGET = getNextIndependenceDay();
 
 type CardTheme = "midnight" | "saffron" | "tiranga" | "emerald";
 type CardFontStyle = "regal" | "serif" | "traditional" | "modern";
@@ -103,7 +94,7 @@ const useCountdown = (targetISO: string): CountdownTime => {
   return time;
 };
 
-// Main Greeting Card Component with 3D Interactive Tilt & Foil Sheen
+// Main Greeting Card Component with 3D Interactive Tilt & Dynamic Milestones
 const WishCard = ({
   senderName,
   recipientName,
@@ -113,6 +104,8 @@ const WishCard = ({
   countdown,
   theme,
   fontStyle,
+  targetYear,
+  ordinalEdition,
   cardRef,
   compact = false,
 }: {
@@ -124,6 +117,8 @@ const WishCard = ({
   countdown: CountdownTime;
   theme: CardTheme;
   fontStyle: CardFontStyle;
+  targetYear: number;
+  ordinalEdition: string;
   cardRef?: React.Ref<HTMLDivElement>;
   compact?: boolean;
 }) => {
@@ -152,7 +147,6 @@ const WishCard = ({
     setSheen({ x: 50, y: 50, opacity: 0 });
   };
 
-  // Theme-specific color gradients
   const themeStyles = {
     midnight: {
       bg: "linear-gradient(165deg, #0b1329 0%, #060913 50%, #0d1b3e 100%)",
@@ -176,7 +170,6 @@ const WishCard = ({
     },
   }[theme];
 
-  // Font family class mapper
   const fontClasses = {
     regal: "font-['Cinzel_Decorative',serif]",
     serif: "font-['Playfair_Display',serif]",
@@ -216,16 +209,16 @@ const WishCard = ({
           <AshokaChakra size={260} animate={false} color="#ffffff" />
         </div>
 
-        {/* Top Header Badge */}
+        {/* Top Header Badge with Auto-Calculated Edition & Year */}
         <div className="relative z-10 flex items-center justify-between gap-2 border-b border-white/10 pb-4">
           <div className="flex items-center gap-1.5">
             <span className="text-base select-none">🇮🇳</span>
             <span className="text-[11px] font-bold tracking-widest uppercase text-slate-300">
-              Azadi Ka Amrit Mahotsav
+              Azadi Ka Mahotsav · {ordinalEdition} Edition
             </span>
           </div>
           <div className={`px-2.5 py-0.5 rounded-full text-[10px] font-semibold border ${themeStyles.badgeBg}`}>
-            15th August
+            15th August {targetYear}
           </div>
         </div>
 
@@ -254,7 +247,7 @@ const WishCard = ({
           className={`relative z-10 font-extrabold tracking-tight text-white drop-shadow-sm ${fontClasses}`}
           style={{ fontSize: compact ? 22 : 28 }}
         >
-          {title || "Happy Independence Day"}
+          {title}
         </h2>
 
         {/* Tricolor Ribbon Accent */}
@@ -263,12 +256,12 @@ const WishCard = ({
         {/* Countdown Tiles */}
         <div className="relative z-10 my-4">
           <div className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-2">
-            {countdown.isComplete ? "Celebration In Progress" : "Countdown to Freedom Day"}
+            {countdown.isComplete ? "Celebration In Progress" : `Countdown to 15th August ${targetYear}`}
           </div>
 
           {countdown.isComplete ? (
             <div className="py-2.5 px-4 rounded-xl bg-gradient-to-r from-amber-500/20 via-emerald-500/20 to-blue-500/20 border border-amber-400/30 text-amber-200 font-bold text-sm">
-              🇮🇳 The Day is Here — Happy Independence Day! 🇮🇳
+              🇮🇳 Happy Independence Day! Jai Hind! 🇮🇳
             </div>
           ) : (
             <div className="grid grid-cols-4 gap-2 max-w-[340px] mx-auto">
@@ -312,7 +305,7 @@ const WishCard = ({
         {/* Signature From Sender */}
         <div className="relative z-10 mt-5 pt-3 border-t border-white/10">
           <div className="text-[11px] font-medium tracking-wide text-slate-400">
-            Warm wishes with pride & honor from
+            Warm wishes with pride &amp; honor from
           </div>
           <div
             className="mt-1 font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-white to-emerald-300 font-sans"
@@ -333,6 +326,8 @@ const WishCard = ({
 };
 
 const Index = () => {
+  const autoInfo = useMemo(() => getIndependenceDayInfo(), []);
+
   const params = useMemo(
     () => (typeof window !== "undefined" ? new URLSearchParams(window.location.search) : new URLSearchParams()),
     []
@@ -344,7 +339,7 @@ const Index = () => {
     params.get("to") || (typeof window !== "undefined" ? localStorage.getItem("idw:to") || "" : "");
   const initialTitle =
     params.get("title") ||
-    (typeof window !== "undefined" ? localStorage.getItem("idw:title") || "Happy Independence Day" : "Happy Independence Day");
+    (typeof window !== "undefined" ? localStorage.getItem("idw:title") || autoInfo.celebrationTitle : autoInfo.celebrationTitle);
   const initialTheme =
     (params.get("theme") as CardTheme) ||
     (typeof window !== "undefined" ? (localStorage.getItem("idw:theme") as CardTheme) || "midnight" : "midnight");
@@ -352,10 +347,11 @@ const Index = () => {
     (params.get("font") as CardFontStyle) ||
     (typeof window !== "undefined" ? (localStorage.getItem("idw:font") as CardFontStyle) || "serif" : "serif");
 
+  // Verify stored target date: if it's already expired/in the past, roll forward automatically to coming year!
   const storedDate =
     params.get("date") || (typeof window !== "undefined" ? localStorage.getItem("idw:date") : null) || null;
   const storedTime = storedDate ? new Date(storedDate).getTime() : NaN;
-  const initialDate = Number.isFinite(storedTime) && storedTime > Date.now() ? storedDate! : DEFAULT_TARGET;
+  const initialDate = Number.isFinite(storedTime) && storedTime > Date.now() ? storedDate! : autoInfo.targetISO;
 
   // State
   const [senderName, setSenderName] = useState<string>(initialName);
@@ -568,8 +564,8 @@ const Index = () => {
   const resetAllDefaults = () => {
     setSenderName("");
     setRecipientName("");
-    setGreetingTitle("Happy Independence Day");
-    setTargetDate(DEFAULT_TARGET);
+    setGreetingTitle(autoInfo.celebrationTitle);
+    setTargetDate(autoInfo.targetISO);
     setCardTheme("midnight");
     setCardFont("serif");
     setSelectedQuoteId("festive-1");
@@ -580,7 +576,7 @@ const Index = () => {
     } catch {}
     toast({
       title: "Settings Restored",
-      description: "Default greeting, theme, and countdown time have been restored.",
+      description: `Default ${autoInfo.ordinalEdition} celebration greeting, theme, and countdown restored.`,
     });
   };
 
@@ -646,7 +642,7 @@ const Index = () => {
                 </span>
               </div>
               <p className="text-[11px] text-slate-400 font-medium">
-                Indian Independence Day Studio
+                Indian Independence Day Studio · {autoInfo.targetYear}
               </p>
             </div>
           </div>
@@ -680,17 +676,26 @@ const Index = () => {
 
       {/* Main Studio Section */}
       <main className="container mx-auto px-4 pt-8 pb-16 relative z-10">
-        {/* Banner Hero */}
+        {/* Banner Hero with Dynamic Milestone Info */}
         <div className="text-center max-w-2xl mx-auto mb-8">
           <div className="inline-flex items-center gap-2 rounded-full border border-amber-400/30 bg-amber-400/10 px-3.5 py-1 text-xs font-semibold text-amber-300 backdrop-blur-md mb-3">
             <Flag className="h-3.5 w-3.5 text-amber-400" />
-            <span>Honoring 78+ Glorious Years of Freedom &amp; Unity</span>
+            <span>{autoInfo.heroBadgeText}</span>
           </div>
+
+          {autoInfo.isTodayIndependenceDay && (
+            <div className="mb-3">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/25 border border-emerald-400/50 text-emerald-300 font-bold text-xs animate-pulse">
+                🇮🇳 Today is August 15th — Happy Independence Day! Jai Hind!
+              </span>
+            </div>
+          )}
+
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white font-sans">
             Personalized <span className="gold-shimmer-text font-serif">Patriotic Greetings</span>
           </h2>
           <p className="mt-2 text-sm sm:text-base text-slate-400 max-w-xl mx-auto font-medium">
-            Hover over the card to explore the 3D foil reflection. Customize typography, dedications, and themes. Share on WhatsApp or export in 2X retina resolution.
+            Hover over the card to explore the 3D foil reflection. Customize typography, dedications, and themes. Automatically rolling forward for {autoInfo.targetYear} &amp; future years.
           </p>
         </div>
 
@@ -708,6 +713,8 @@ const Index = () => {
                 countdown={countdown}
                 theme={cardTheme}
                 fontStyle={cardFont}
+                targetYear={autoInfo.targetYear}
+                ordinalEdition={autoInfo.ordinalEdition}
                 cardRef={cardRef}
               />
             </div>
@@ -893,7 +900,7 @@ const Index = () => {
                     type="text"
                     value={greetingTitle}
                     onChange={(e) => setGreetingTitle(e.target.value)}
-                    placeholder="Happy Independence Day"
+                    placeholder={autoInfo.celebrationTitle}
                     className="w-full rounded-xl bg-slate-950/80 border border-white/15 px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition"
                   />
                 </div>
@@ -962,10 +969,10 @@ const Index = () => {
                   </label>
                   <div className="grid grid-cols-2 gap-2">
                     {[
-                      { id: "regal" as CardFontStyle, label: "Cinzel Regal", sample: "ABC" },
-                      { id: "serif" as CardFontStyle, label: "Playfair Serif", sample: "ABC" },
-                      { id: "traditional" as CardFontStyle, label: "Rozha Traditional", sample: "ABC" },
-                      { id: "modern" as CardFontStyle, label: "Jakarta Modern", sample: "ABC" },
+                      { id: "regal" as CardFontStyle, label: "Cinzel Regal" },
+                      { id: "serif" as CardFontStyle, label: "Playfair Serif" },
+                      { id: "traditional" as CardFontStyle, label: "Rozha Traditional" },
+                      { id: "modern" as CardFontStyle, label: "Jakarta Modern" },
                     ].map((f) => (
                       <button
                         key={f.id}
@@ -1066,17 +1073,17 @@ const Index = () => {
                     className="w-full rounded-xl bg-slate-950/80 border border-white/15 px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition"
                   />
                   <p className="mt-1.5 text-[11px] text-slate-400 leading-relaxed">
-                    By default, the countdown targets India's next Independence Day on August 15th at midnight.
+                    By default, the countdown automatically targets India's next Independence Day on August 15th ({autoInfo.targetYear}) at midnight.
                   </p>
                 </div>
 
                 <div className="pt-2">
                   <button
                     type="button"
-                    onClick={() => setTargetDate(DEFAULT_TARGET)}
+                    onClick={() => setTargetDate(autoInfo.targetISO)}
                     className="w-full rounded-xl bg-slate-950 border border-white/15 py-2.5 text-xs font-bold text-slate-300 hover:text-white hover:bg-slate-800 transition"
                   >
-                    Set to Next Independence Day (15th August)
+                    Reset to Next Independence Day (15th August {autoInfo.targetYear})
                   </button>
                 </div>
               </div>
@@ -1086,7 +1093,7 @@ const Index = () => {
             <div className="mt-6 pt-4 border-t border-white/10">
               <a
                 href={`https://wa.me/?text=${encodeURIComponent(
-                  `🇮🇳 Happy Independence Day! Here is a personalized celebratory wish card for you from ${
+                  `🇮🇳 ${greetingTitle}! Here is a personalized celebratory wish card for you from ${
                     senderName || "your friend"
                   }:\n\n${getShareableUrl()}`
                 )}`}
@@ -1107,7 +1114,7 @@ const Index = () => {
         <div className="flex items-center gap-2">
           <a
             href={`https://wa.me/?text=${encodeURIComponent(
-              `🇮🇳 Happy Independence Day! Personalized wish from ${senderName || "Friend"}: ${getShareableUrl()}`
+              `🇮🇳 ${greetingTitle}! Personalized wish from ${senderName || "Friend"}: ${getShareableUrl()}`
             )}`}
             target="_blank"
             rel="noopener noreferrer"

@@ -102,10 +102,14 @@
     <td width="50%">
       <h3 align="left">📲 Instant Sharing & QR Code</h3>
       <p>Pre-populated WhatsApp sharing with festive emoji templates, URL query parameter generation, and on-screen QR Code modal for instant mobile scanning.</p>
+  <tr>
+    <td width="50%">
+      <h3 align="left">🔄 Automatic Annual Rollover</h3>
+      <p>Self-updating milestone logic that dynamically computes the exact edition of Independence Day (e.g. 80th, 81st, 100th Centenary), years of freedom completed since 1947, and automatically rolls forward to August 15th of the coming year with zero manual code updates.</p>
     </td>
     <td width="50%">
-      <h3 align="left">🎆 Pyrotechnic Confetti</h3>
-      <p>Multi-directional tricolor celebratory fireworks burst powered by <code>canvas-confetti</code> with reduced-motion accessibility support.</p>
+      <h3 align="left">🎆 Pyrotechnic Confetti &amp; Embers</h3>
+      <p>Multi-directional tricolor celebratory fireworks bursts powered by <code>canvas-confetti</code> alongside ambient floating HTML5 particle embers with reduced-motion accessibility support.</p>
     </td>
   </tr>
 </table>

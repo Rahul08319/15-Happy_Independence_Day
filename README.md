@@ -258,6 +258,7 @@ Full accessibility and media control straight from your keyboard:
 │   │   ├── AshokaChakra.tsx         # Geometric 24-spoke SVG chakra with continuous rotation
 │   │   ├── FloatingKites.tsx        # Canva-inspired aerodynamic vector fighter kites with wind physics
 │   │   ├── RedFortSilhouette.tsx    # Lahori Gate Red Fort vector rampart silhouette
+│   │   ├── NationalPrideShowcase.tsx # Emblems of Sovereign India, 24 Virtues & Azadi Pledge
 │   │   ├── IndependenceHistorySection.tsx # Wikipedia-authenticated timeline, customs, & trivia
 │   │   ├── MusicPlayer.tsx          # Glassmorphic audio pill with real-time waveform visualizer
 │   │   ├── QRCodeModal.tsx          # High-contrast mobile QR code scan & share modal

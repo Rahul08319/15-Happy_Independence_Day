@@ -29,6 +29,7 @@ import QRCodeModal from "@/components/QRCodeModal";
 import CelebrationCanvas from "@/components/CelebrationCanvas";
 import FloatingKites from "@/components/FloatingKites";
 import IndependenceHistorySection from "@/components/IndependenceHistorySection";
+import NationalPrideShowcase from "@/components/NationalPrideShowcase";
 import { PATRIOTIC_QUOTES } from "@/components/patrioticQuotes";
 import { getIndependenceDayInfo } from "@/lib/independenceDay";
 import vandemataram from "@/assets/vandemataram.mp3";
@@ -1312,96 +1313,14 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Visual Feature Bento */}
-        <div className="mt-24 max-w-6xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-
-            {/* Tile 1 — Glass */}
-            <div className="apple-glass rounded-3xl p-6 flex flex-col items-center justify-center gap-3 aspect-square relative overflow-hidden transition-all hover:scale-[1.02]" style={{background:"linear-gradient(135deg,rgba(251,191,36,0.08),rgba(180,83,9,0.04))"}}>
-              <div className="absolute top-0 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-amber-400/40 to-transparent" />
-              <div className="h-14 w-14 rounded-2xl bg-amber-500/20 border border-amber-400/20 flex items-center justify-center text-amber-300 shadow-lg">
-                <Layers className="h-6 w-6" />
-              </div>
-              <span className="text-xs font-semibold tracking-widest uppercase text-amber-300/80">Glass</span>
-            </div>
-
-            {/* Tile 2 — Audio (wide) with Live Equalizer Animation */}
-            <div className="apple-glass rounded-3xl p-6 flex flex-col items-center justify-center gap-3 relative overflow-hidden transition-all hover:scale-[1.02] col-span-2" style={{background:"linear-gradient(135deg,rgba(59,130,246,0.08),rgba(29,78,216,0.04))"}}>
-              <div className="absolute top-0 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-blue-400/40 to-transparent" />
-              {/* Dynamic live equalizer bars with staggered spring bounce */}
-              <div className="flex items-end gap-[3px] h-10">
-                {[
-                  { delay: "0s", dur: "0.85s" },
-                  { delay: "0.2s", dur: "1.15s" },
-                  { delay: "0.4s", dur: "0.75s" },
-                  { delay: "0.1s", dur: "1.3s" },
-                  { delay: "0.5s", dur: "0.95s" },
-                  { delay: "0.3s", dur: "1.2s" },
-                  { delay: "0.6s", dur: "0.9s" },
-                  { delay: "0.15s", dur: "1.1s" },
-                  { delay: "0.45s", dur: "0.8s" },
-                  { delay: "0.25s", dur: "1.25s" },
-                  { delay: "0.55s", dur: "0.9s" },
-                  { delay: "0.35s", dur: "1.05s" },
-                  { delay: "0.05s", dur: "1.18s" },
-                ].map((item, i) => (
-                  <div
-                    key={i}
-                    className="w-1 rounded-full bg-blue-400/80 animate-bento-bar"
-                    style={{
-                      animationDelay: item.delay,
-                      animationDuration: item.dur,
-                    }}
-                  />
-                ))}
-              </div>
-              <div className="h-10 w-10 rounded-2xl bg-blue-500/20 border border-blue-400/20 flex items-center justify-center text-blue-300 shadow-sm">
-                <Music className="h-5 w-5" />
-              </div>
-              <span className="text-xs font-semibold tracking-widest uppercase text-blue-300/80">Audio</span>
-            </div>
-
-            {/* Tile 3 — Share */}
-            <div className="apple-glass rounded-3xl p-6 flex flex-col items-center justify-center gap-3 aspect-square relative overflow-hidden transition-all hover:scale-[1.02]" style={{background:"linear-gradient(135deg,rgba(16,185,129,0.08),rgba(6,95,70,0.04))"}}>
-              <div className="absolute top-0 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent" />
-              <div className="h-14 w-14 rounded-2xl bg-emerald-500/20 border border-emerald-400/20 flex items-center justify-center text-emerald-300 shadow-lg">
-                <Smartphone className="h-6 w-6" />
-              </div>
-              <span className="text-xs font-semibold tracking-widest uppercase text-emerald-300/80">Share</span>
-            </div>
-
-            {/* Tile 4 — Tricolour stripe (wide) with Smooth Rotating Chakra */}
-            <div className="apple-glass rounded-3xl p-6 flex items-center justify-center gap-6 col-span-2 relative overflow-hidden transition-all hover:scale-[1.01]" style={{background:"linear-gradient(135deg,rgba(255,153,0,0.06),rgba(19,136,8,0.06))"}}>
-              <div className="absolute top-0 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-              <div className="flex flex-col gap-1">
-                <div className="h-2.5 w-24 rounded-full bg-[#FF9933]/70 shadow-[0_0_8px_rgba(255,153,0,0.3)]" />
-                <div className="h-2.5 w-24 rounded-full bg-white/50 shadow-[0_0_8px_rgba(255,255,255,0.2)]" />
-                <div className="h-2.5 w-24 rounded-full bg-[#138808]/70 shadow-[0_0_8px_rgba(19,136,8,0.3)]" />
-              </div>
-              <div className="h-12 w-12 rounded-full border-2 border-[#000080]/60 flex items-center justify-center animate-[spin_25s_linear_infinite] shadow-[0_0_12px_rgba(0,0,128,0.25)]">
-                <div className="h-8 w-8 rounded-full border-2 border-[#000080]/40" />
-              </div>
-              <span className="text-xs font-semibold tracking-widest uppercase text-white/50">Tricolour</span>
-            </div>
-
-            {/* Tile 5 — Export */}
-            <div className="apple-glass rounded-3xl p-6 flex flex-col items-center justify-center gap-3 aspect-square relative overflow-hidden transition-all hover:scale-[1.02]" style={{background:"linear-gradient(135deg,rgba(139,92,246,0.08),rgba(76,29,149,0.04))"}}>
-              <div className="absolute top-0 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-violet-400/40 to-transparent" />
-              <div className="h-14 w-14 rounded-2xl bg-violet-500/20 border border-violet-400/20 flex items-center justify-center text-violet-300 shadow-lg">
-                <Download className="h-6 w-6" />
-              </div>
-              <span className="text-xs font-semibold tracking-widest uppercase text-violet-300/80">Export</span>
-            </div>
-
-            {/* Tile 6 — Year badge */}
-            <div className="apple-glass rounded-3xl p-6 flex flex-col items-center justify-center gap-2 aspect-square relative overflow-hidden transition-all hover:scale-[1.02]" style={{background:"linear-gradient(135deg,rgba(244,63,94,0.06),rgba(159,18,57,0.04))"}}>
-              <div className="absolute top-0 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-rose-400/40 to-transparent" />
-              <span className="text-4xl font-black tracking-tight text-rose-300/80 leading-none">{autoInfo.targetYear}</span>
-              <span className="text-xs font-semibold tracking-widest uppercase text-rose-300/50">Edition</span>
-            </div>
-
-          </div>
-        </div>
+        {/* Living Emblems of Sovereign India & Azadi Pride Showcase */}
+        <NationalPrideShowcase
+          senderName={senderName}
+          isPlaying={isPlaying}
+          onTogglePlay={togglePlay}
+          onFireCelebration={handleCelebrateClick}
+          targetYear={autoInfo.targetYear}
+        />
 
         {/* Wikipedia Historical Knowledge & National Traditions Section */}
         <IndependenceHistorySection />

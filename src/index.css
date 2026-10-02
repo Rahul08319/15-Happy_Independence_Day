@@ -294,13 +294,23 @@
 
 /* Apple Style Floating Island Header */
 .apple-floating-island {
-  background: rgba(10, 15, 28, 0.78);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(8, 14, 28, 0.82);
+  backdrop-filter: blur(28px) saturate(190%) brightness(108%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%) brightness(108%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   box-shadow:
-    0 12px 32px -8px rgba(0, 0, 0, 0.6),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    0 20px 45px -10px rgba(0, 0, 0, 0.75),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+  transition: transform 0.35s var(--ease-spring), box-shadow 0.35s var(--ease-spring), border-color 0.35s var(--ease-spring);
+}
+
+.apple-floating-island:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow:
+    0 24px 55px -10px rgba(0, 0, 0, 0.85),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3);
 }
 
 /* Canva-Inspired Floating Kites (Patang) Animations */

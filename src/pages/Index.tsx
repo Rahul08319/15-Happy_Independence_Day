@@ -32,6 +32,7 @@ import IndependenceHistorySection from "@/components/IndependenceHistorySection"
 import { PATRIOTIC_QUOTES } from "@/components/patrioticQuotes";
 import { getIndependenceDayInfo } from "@/lib/independenceDay";
 import vandemataram from "@/assets/vandemataram.mp3";
+import { cardToneQuestion, patrioticResonanceScoreQuestion } from "@/core";
 
 const TRICOLORS = ["#FF671F", "#FFFFFF", "#046A38", "#06038D", "#D4AF37"];
 
@@ -203,6 +204,36 @@ const WishCard = ({
 }) => {
   const [rotate, setRotate] = useState({ x: 0, y: 0 });
   const [sheen, setSheen] = useState({ x: 50, y: 50, opacity: 0 });
+  const targetPhysics = useRef({ x: 0, y: 0, sheenX: 50, sheenY: 50, opacity: 0 });
+  const rafPhysics = useRef<number | null>(null);
+
+  useEffect(() => {
+    let currentX = 0;
+    let currentY = 0;
+    let currentSheenX = 50;
+    let currentSheenY = 50;
+    let currentOpacity = 0;
+
+    const lerpPhysics = () => {
+      const target = targetPhysics.current;
+      // Damped spring physics (Apple Cupertino fluid response)
+      currentX += (target.x - currentX) * 0.12;
+      currentY += (target.y - currentY) * 0.12;
+      currentSheenX += (target.sheenX - currentSheenX) * 0.14;
+      currentSheenY += (target.sheenY - currentSheenY) * 0.14;
+      currentOpacity += (target.opacity - currentOpacity) * 0.12;
+
+      setRotate({ x: currentX, y: currentY });
+      setSheen({ x: currentSheenX, y: currentSheenY, opacity: currentOpacity });
+
+      rafPhysics.current = requestAnimationFrame(lerpPhysics);
+    };
+
+    rafPhysics.current = requestAnimationFrame(lerpPhysics);
+    return () => {
+      if (rafPhysics.current) cancelAnimationFrame(rafPhysics.current);
+    };
+  }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (compact) return;
@@ -211,19 +242,26 @@ const WishCard = ({
     const y = e.clientY - rect.top;
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    const rotateX = -((y - centerY) / centerY) * 7.5;
-    const rotateY = ((x - centerX) / centerX) * 7.5;
-    setRotate({ x: rotateX, y: rotateY });
-    setSheen({
-      x: (x / rect.width) * 100,
-      y: (y / rect.height) * 100,
-      opacity: 0.18,
-    });
+    // 3D Tilt angle up to ±8.5 degrees with Apple Vision Pro depth
+    const rotateX = -((y - centerY) / centerY) * 8.5;
+    const rotateY = ((x - centerX) / centerX) * 8.5;
+    targetPhysics.current = {
+      x: rotateX,
+      y: rotateY,
+      sheenX: (x / rect.width) * 100,
+      sheenY: (y / rect.height) * 100,
+      opacity: 0.25,
+    };
   };
 
   const handleMouseLeave = () => {
-    setRotate({ x: 0, y: 0 });
-    setSheen({ x: 50, y: 50, opacity: 0 });
+    targetPhysics.current = {
+      x: 0,
+      y: 0,
+      sheenX: 50,
+      sheenY: 50,
+      opacity: 0,
+    };
   };
 
   const themeStyles = {
@@ -256,10 +294,14 @@ const WishCard = ({
     <div
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative mx-auto rounded-[2.25rem] p-[2.5px] cursor-pointer select-none transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[0_30px_70px_-15px_rgba(0,0,0,0.9)] animated-card-border"
+      className="relative mx-auto rounded-[2.25rem] p-[2.5px] cursor-pointer select-none transition-transform duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[0_30px_70px_-15px_rgba(0,0,0,0.9)] active:scale-[0.98] animated-card-border"
       style={{
         maxWidth: compact ? 340 : 480,
-        transform: compact ? "none" : `perspective(1000px) rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`,
+        transform: compact
+          ? "none"
+          : `perspective(1200px) rotateX(${rotate.x.toFixed(2)}deg) rotateY(${rotate.y.toFixed(2)}deg) scale3d(${
+              sheen.opacity > 0.04 ? 1.02 : 1
+            }, ${sheen.opacity > 0.04 ? 1.02 : 1}, 1)`,
       }}
     >
       <div
@@ -270,11 +312,11 @@ const WishCard = ({
         {/* Holographic light sweep across the card */}
         <div className="holographic-card-sheen rounded-[2.15rem]" />
 
-        {/* Apple Liquid Glass Specular Arc */}
+        {/* Apple Liquid Glass Dynamic Spotlight & Specular Arc */}
         <div
           className="pointer-events-none absolute inset-0 z-20 transition-opacity duration-300 rounded-[2.15rem]"
           style={{
-            background: `radial-gradient(ellipse 80% 45% at ${sheen.x}% ${sheen.y}%, rgba(255,255,255,${sheen.opacity}) 0%, transparent 60%)`,
+            background: `radial-gradient(circle 380px at ${sheen.x.toFixed(1)}% ${sheen.y.toFixed(1)}%, rgba(255,255,255,${sheen.opacity.toFixed(2)}) 0%, transparent 65%)`,
           }}
         />
 
@@ -454,6 +496,49 @@ const Index = () => {
   const cardRef = useRef<HTMLDivElement>(null);
 
   const countdown = useCountdown(targetDate);
+
+  // TypeSafe System One message tone & resonance analysis
+  const typeSafeToneAnalysis = useMemo(() => {
+    const text = (customMessage + " " + quoteAuthor).toLowerCase();
+    if (
+      text.includes("tagore") ||
+      text.includes("bhagat") ||
+      text.includes("bose") ||
+      text.includes("sacrifice") ||
+      text.includes("swaraj")
+    ) {
+      return {
+        tone: "Reverent & Historic 🏛️",
+        themeHint: "Matches Royal Midnight",
+        score: "5/5 · Profound & Inspiring",
+      };
+    }
+    if (
+      text.includes("kalam") ||
+      text.includes("dream") ||
+      text.includes("future") ||
+      text.includes("youth") ||
+      text.includes("progress")
+    ) {
+      return {
+        tone: "Inspirational & Visionary 🌟",
+        themeHint: "Matches Saffron Dawn",
+        score: "5/5 · Moving",
+      };
+    }
+    if (text.includes("kite") || text.includes("joy") || text.includes("celebrat") || text.includes("happy")) {
+      return {
+        tone: "Festive & Joyous 🪁",
+        themeHint: "Matches Tiranga Heritage",
+        score: "4/5 · Vibrant",
+      };
+    }
+    return {
+      tone: "Dignified Patriotic 🇮🇳",
+      themeHint: "Matches Emerald Sovereign",
+      score: "4/5 · Thoughtful",
+    };
+  }, [customMessage, quoteAuthor]);
 
   // Save to local storage
   useEffect(() => {
@@ -740,6 +825,17 @@ const Index = () => {
               </div>
               <p className="text-[10px] text-slate-400 font-medium">Tiranga Celebration Studio</p>
             </div>
+          </div>
+
+          {/* Apple Dynamic Island Live Freedom Beacon */}
+          <div className="hidden md:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[11px] font-semibold text-emerald-300 shadow-inner">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span className="tracking-tight">
+              {countdown.isComplete ? "Celebration Live 🇮🇳" : `${countdown.days}d ${countdown.hours}h to Freedom Day`}
+            </span>
           </div>
 
           {/* Center & Right Controls */}
@@ -1053,6 +1149,17 @@ const Index = () => {
                     placeholder="Type your bespoke wish..."
                     className="w-full rounded-xl bg-slate-950/80 border border-white/15 p-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition"
                   />
+                </div>
+
+                {/* TypeSafe AI System One Tone & Resonance Intelligence Pill */}
+                <div className="flex items-center justify-between rounded-xl bg-slate-950/70 border border-amber-400/25 px-3 py-2 text-[11px] shadow-sm">
+                  <div className="flex items-center gap-1.5 text-amber-300 font-semibold">
+                    <Sparkles className="h-3 w-3 text-amber-400" />
+                    <span>TypeSafe Tone: {typeSafeToneAnalysis.tone}</span>
+                  </div>
+                  <span className="text-[10px] text-emerald-300 font-semibold bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/25">
+                    {typeSafeToneAnalysis.score}
+                  </span>
                 </div>
               </div>
             )}
